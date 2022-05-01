@@ -1,0 +1,19 @@
+# Show different test structures
+
+- L0: getting familiar with test structures
+- L1: depending on other classes (dependency injection)
+- L2: depending on other classes which are instanciated within the unit
+- L3: having a beforeEach function that requres some input to get started (like a url)
+- L4: multi level describes
+  - moving the beforeEach and after each in a function so that they can be reused in each level
+- L5: async tests
+- L6: automate test creation with json
+
+# What do you actually unit test?
+
+- only behavior not functions!
+  - never ever make a function public to test it!!
+  - get away from the idea of testing functions, you should only test behavior. Usually results in the same tests, but its a mindset difference. You will not be tempted to wirte tests that make it hard for your code to change.
+- one context (usually one class)
+  - if you split a class into sub classes, because it became to big, then thats an implementation detail and the sub classes are to be tested with the parent class!
+  - this allows to refactor your code. If you do not follow this approach, you create briddle unit tests which make it hard to refactor your code 
