@@ -9,6 +9,13 @@
 - L5: async tests
 - L6: automate test creation with json
 
+# Different settings
+
+show the differene between 
+- mocha + sinon
+- jest
+- jesmin
+
 # What do you actually unit test?
 
 - only behavior not functions!
