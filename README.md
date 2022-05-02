@@ -26,7 +26,6 @@ They depend on the previous difficulties and especially in the higher levels you
 - L2: depending on other classes which are instantiated within the unit
 - L3: having a beforeEach function that requires some input to get started (like a url)
 - L4: multi level describes
-  - moving the beforeEach and after each in a function so that they can be reused in each level
 - L5: async tests
 - L6: automate test creation with json
 
