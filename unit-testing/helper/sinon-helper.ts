@@ -19,7 +19,7 @@ export function stubClass<
   >;
 }
 
-export function stubClassSingelton<
+export function stubClassSingleton<
   T extends AnyObject,
   Key extends OnlyClassProperties<T>
 >(module: T, name: Key): StubbedInstance<InstanceType<T[Key]>> {

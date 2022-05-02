@@ -1,26 +1,37 @@
-import sinon, { StubbedInstance, stubInterface } from 'ts-sinon';
+import sinon, { StubbedInstance } from 'ts-sinon';
 import { expect, use } from 'chai';
 import * as sinonChai from 'sinon-chai';
 use(sinonChai);
 
+import { stubClassSingleton } from '../helper/sinon-helper';
 import { Component } from './component';
+/**
+ * This kind of import wraps all exports of a file into an object.
+ * In TS one file is one module
+ */
 import * as ServiceModule from './service';
-// import { stubClassSingelton } from '../helper/sinon-helper';
 
 describe('Component', () => {
   let comp: Component;
   let service: StubbedInstance<ServiceModule.Service>;
   beforeEach(() => {
-    // create a mock (stub) based on a type
-
-    sinon.stub(ServiceModule, "Service").returns(service = stubInterface<ServiceModule.Service>());
-
-    // service = stubClassSingelton(ServiceModule, "Service");
+    /**
+     * As we cannot inject the mock, we need to mock the class (keep in mind that classes are just functions in JS).
+     * The nice part is that, with the syntax we used in the import, we can stub the class.
+     * I created a utility that only stubs class functions (because sinon does not a very good job at typing such functions).
+     */
+    service = stubClassSingleton(ServiceModule, "Service");
+    /**
+     * Here is the equivalent without the utility 
+     */
+    // sinon.stub(ServiceModule, "Service").returns(service = stubInterface<ServiceModule.Service>());
 
     comp = new Component();
   });
 
-  // remove all mocks (stub, spy)
+  /**
+   * cleanup is still required
+   */
   afterEach(() => sinon.restore());
 
   it('should validate first parameter', () => {

@@ -10,12 +10,18 @@ describe('Component', () => {
   let comp: Component;
   let service: StubbedInstance<Service>;
   beforeEach(() => {
-    // create a mock (stub) based on a type
+    /**
+     * We do not want to test the service itself as it is of another context.
+     * So, we stub it and then inject it
+     */
     service = stubInterface<Service>();
     comp = new Component(service);
   });
 
-  // remove all mocks (stub, spy)
+  /**
+   * When creating stubs (or spies or however they are called in the framework), 
+   * then we need to clean up afterwards
+   */
   afterEach(() => sinon.restore());
 
   it('should validate first parameter', () => {
