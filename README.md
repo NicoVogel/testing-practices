@@ -59,8 +59,13 @@ If you are not interested in reading the entire article, here the TLDR:
 
 - each test must be independent of each other.
   - so make sure to always clean up after each test
-- it is only a unit test if it can run machine independently
+- it is only a unit test if it can run machine independently.
   - so no dependency to a database, file system or any other external systems
+- each unit test should contain all the information needed to reason about it.
+  - Unit tests are tests, but they are also the most accurate system description you have.
+  So, it is important to keep all the relevant information for a given test in the test itself.
+  Setting up the test is a special case, but as this is the same procedure for all tests, it is fine to have this in a separate function.
+  But there are times where the setup depends on test data (see test-structure-L3)
 
 ## E2E testing
 
