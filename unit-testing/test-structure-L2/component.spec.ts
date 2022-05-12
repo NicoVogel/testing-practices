@@ -11,7 +11,7 @@ import { Component } from "./component";
  */
 import * as ServiceModule from "./service";
 
-describe("Component", () => {
+describe("L2 - Depending on other classes which are instantiated within the unit", () => {
   let comp: Component;
   let service: StubbedInstance<ServiceModule.Service>;
   beforeEach(() => {

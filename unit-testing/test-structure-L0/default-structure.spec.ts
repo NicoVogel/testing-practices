@@ -2,15 +2,15 @@ import { expect } from "chai";
 import { DefaultStructure } from "./default-structure";
 
 // one describe that contains the name of the component
-describe("DefaultStructure", () => {
+describe("L0 - Getting familiar with test structure", () => {
   let defaultStructure: DefaultStructure;
 
   /**
-   * by moving the test setup into a single funciton, there is only a single place to look at.
+   * by moving the test setup into a single function, there is only a single place to look at.
    * This has the following benefits:
    * - clean tests
    * - the setup is not distributed between the tests, but only in this function
-   * - no side effects possible (in case of pure funciton)
+   * - no side effects possible (in case of pure function)
    */
   beforeEach(() => {
     defaultStructure = new DefaultStructure();
@@ -21,10 +21,10 @@ describe("DefaultStructure", () => {
     // Given
 
     // When
-    const restult = defaultStructure.example();
+    const result = defaultStructure.example();
 
     // Then
-    expect(restult).to.equal("hello world");
+    expect(result).to.equal("hello world");
   });
 
   // short tests
@@ -33,9 +33,9 @@ describe("DefaultStructure", () => {
     defaultStructure.setName("nico");
 
     // When
-    const restult = defaultStructure.example();
+    const result = defaultStructure.example();
 
     // Then
-    expect(restult).to.equal("hello world");
+    expect(result).to.equal("hello world");
   });
 });

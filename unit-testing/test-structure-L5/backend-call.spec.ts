@@ -4,7 +4,7 @@ import * as sinonChai from "sinon-chai";
 import { backendCall } from "./backend-call";
 use(sinonChai);
 
-describe("L5 - ", () => {
+describe("L5 - Async tests", () => {
   let clock: sinon.SinonFakeTimers;
   beforeEach(() => {
     // mock the browser internal timer

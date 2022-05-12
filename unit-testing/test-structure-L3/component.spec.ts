@@ -4,7 +4,7 @@ use(sinonChai);
 
 import { Component } from "./component";
 
-describe("Component", () => {
+describe("L3 - Having a beforeEach function that requires some input to get started", () => {
   let comp: Component;
   /**
    * This function replaces the "beforeEach" hook.

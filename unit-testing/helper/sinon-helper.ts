@@ -23,8 +23,8 @@ export function stubClassSingleton<
   T extends AnyObject,
   Key extends OnlyClassProperties<T>
 >(module: T, name: Key): StubbedInstance<InstanceType<T[Key]>> {
-  const singeltonStub = stubInterface<InstanceType<T[Key]>>();
+  const singletonStub = stubInterface<InstanceType<T[Key]>>();
   // overrides the returned value of the constructor function, but the constructor is still executed!!
-  stubClass(module, name).returns(singeltonStub);
-  return singeltonStub;
+  stubClass(module, name).returns(singletonStub);
+  return singletonStub;
 }

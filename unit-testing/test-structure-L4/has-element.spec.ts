@@ -7,7 +7,7 @@ use(sinonChai);
  * Tip: Multi level tests are best mixed with the "initTest" method from level 3
  */
 
-describe("L4 - Component", () => {
+describe("L4 - Multi level describes", () => {
   /**
    * Sub describes are great to group your tests by partial contexts.
    * It is usually helpful for units that are to big to be part of one file and therefore are split into multiple files.

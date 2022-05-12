@@ -6,7 +6,7 @@ use(sinonChai);
 import { Component } from "./component";
 import { Service } from "./service";
 
-describe("Component", () => {
+describe("L1 - Depending on other classes (dependency injection)", () => {
   let comp: Component;
   let service: StubbedInstance<Service>;
   beforeEach(() => {
