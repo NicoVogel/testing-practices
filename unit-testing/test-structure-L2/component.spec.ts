@@ -34,41 +34,36 @@ describe("L2 - Depending on other classes which are instantiated within the unit
    */
   afterEach(() => sinon.restore());
 
-  it("should validate first parameter", () => {
+  it("should find no match for empty items", () => {
     // Given
+    service.getItems.returns([]);
 
     // When
-    const result = comp.handleUserInput(-1, 10);
+    const result = comp.validateUserInput(1);
 
     // Then
-    expect(result.valid).to.be.false;
-    if (result.valid === true) return;
-    expect(result.error).to.not.be.undefined;
-    expect(service.computeByBackend).to.have.not.been.called;
+    expect(result).to.be.false;
   });
 
-  it("should validate second parameter", () => {
+  it("should find no match with non empty items", () => {
     // Given
+    service.getItems.returns([1, 2, 3]);
 
     // When
-    const result = comp.handleUserInput(10, 200);
+    const result = comp.validateUserInput(10);
 
     // Then
-    expect(result.valid).to.be.false;
-    if (result.valid === true) return;
-    expect(result.error).to.not.be.undefined;
-    expect(service.computeByBackend).to.have.not.been.called;
+    expect(result).to.be.false;
   });
 
-  it("should call the backend", () => {
+  it("should find a match", () => {
     // Given
+    service.getItems.returns([1, 2, 3]);
 
     // When
-    const result = comp.handleUserInput(-1, 10);
+    const result = comp.validateUserInput(1);
 
     // Then
-    expect(result.valid).to.be.true;
-    if (result.valid === false) return;
-    expect(service.computeByBackend).to.have.been.called;
+    expect(result).to.be.true;
   });
 });

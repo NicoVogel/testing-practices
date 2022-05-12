@@ -1,5 +1,5 @@
 export class Service {
-  computeByBackend(a: number, b: number) {
-    return a + b;
+  getItems(): number[] {
+    return [1, 2, 3, 4, 5, 6];
   }
 }

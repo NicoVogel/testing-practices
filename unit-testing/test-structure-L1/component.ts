@@ -1,29 +1,9 @@
 import { Service } from "./service";
 
-type HandledUserInput =
-  | {
-      valid: true;
-      result: number;
-    }
-  | {
-      valid: false;
-      error: string;
-    };
-
 export class Component {
-  constructor(private calc: Service) {}
+  constructor(private backendService: Service) {}
 
-  handleUserInput(first: number, second: number): HandledUserInput {
-    if (first < 0) {
-      return { valid: false, error: "First input cannot be smaller than 0" };
-    }
-
-    if (second > 100) {
-      return {
-        valid: false,
-        error: "Second input cannot be greather than 100",
-      };
-    }
-    return { valid: true, result: this.calc.computeByBackend(first, second) };
+  validateUserInput(input: number): boolean {
+    return this.backendService.getItems().some((item) => item === input);
   }
 }
