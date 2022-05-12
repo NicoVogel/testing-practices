@@ -57,6 +57,29 @@ If you are not interested in reading the entire article, here the TLDR:
   - if you split a class into sub classes, because it became to big, then thats an implementation detail and the sub classes are to be tested with the parent class!
   - this allows to refactor your code. If you do not follow this approach, you create bridle unit tests which make it hard to refactor your code
 
+To better understand the point of testing contracts not implementation lets see how this can be achieved.
+A contract is defined by
+
+- preconditions: need to be fulfilled before the action
+- postconditions: need to be fulfilled after the action
+- invariants: are true before and after the action
+
+Now this can be simply mapped to:
+
+- Give: preconditions + invariants
+- When: (action)
+- Then: postconditions + invariants
+
+**Important**
+
+As TypeScript has such a flexible type system, some parts of the contract can be validated by the type system itself and no tests are needed.
+For example you expect that a specific object is returned, that TypeScript guarantees that already as it cannot be null or undefined.
+You would need to explicitly allow it to be null or undefined and then it would be part of the contract.
+
+Therefore, learning more about the TypeScript type system can also lead to better code in general.
+
+> Only if you use strict mode!!!
+
 ### What should you consider when creating a unit test?
 
 - each test must be independent of each other.
