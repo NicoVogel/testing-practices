@@ -1,4 +1,4 @@
-import sinon, { StubbedInstance, stubInterface } from 'ts-sinon';
+import sinon, { StubbedInstance, stubInterface } from "ts-sinon";
 
 type AnyObject = Record<string, any>;
 type AnyClass = new (...args: any[]) => any;

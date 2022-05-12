@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import { DefaultStructure } from './default-structure';
+import { expect } from "chai";
+import { DefaultStructure } from "./default-structure";
 
 // one describe that contains the name of the component
-describe('DefaultStructure', () => {
+describe("DefaultStructure", () => {
   let defaultStructure: DefaultStructure;
 
   /**
@@ -17,25 +17,25 @@ describe('DefaultStructure', () => {
   });
 
   // short tests
-  it('should return hello world', () => {
+  it("should return hello world", () => {
     // Given
 
     // When
     const restult = defaultStructure.example();
 
     // Then
-    expect(restult).to.equal('hello world');
+    expect(restult).to.equal("hello world");
   });
 
   // short tests
-  it('should return hello nico', () => {
+  it("should return hello nico", () => {
     // Given
-    defaultStructure.setName('nico');
+    defaultStructure.setName("nico");
 
     // When
     const restult = defaultStructure.example();
 
     // Then
-    expect(restult).to.equal('hello world');
+    expect(restult).to.equal("hello world");
   });
 });

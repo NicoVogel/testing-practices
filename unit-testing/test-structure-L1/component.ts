@@ -1,4 +1,4 @@
-import { Service } from './service';
+import { Service } from "./service";
 
 type HandledUserInput =
   | {
@@ -15,13 +15,13 @@ export class Component {
 
   handleUserInput(first: number, second: number): HandledUserInput {
     if (first < 0) {
-      return { valid: false, error: 'First input cannot be smaller than 0' };
+      return { valid: false, error: "First input cannot be smaller than 0" };
     }
 
     if (second > 100) {
       return {
         valid: false,
-        error: 'Second input cannot be greather than 100',
+        error: "Second input cannot be greather than 100",
       };
     }
     return { valid: true, result: this.calc.computeByBackend(first, second) };

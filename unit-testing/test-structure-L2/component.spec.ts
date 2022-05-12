@@ -1,17 +1,17 @@
-import sinon, { StubbedInstance } from 'ts-sinon';
-import { expect, use } from 'chai';
-import * as sinonChai from 'sinon-chai';
+import sinon, { StubbedInstance } from "ts-sinon";
+import { expect, use } from "chai";
+import * as sinonChai from "sinon-chai";
 use(sinonChai);
 
-import { stubClassSingleton } from '../helper/sinon-helper';
-import { Component } from './component';
+import { stubClassSingleton } from "../helper/sinon-helper";
+import { Component } from "./component";
 /**
  * This kind of import wraps all exports of a file into an object.
  * In TS one file is one module
  */
-import * as ServiceModule from './service';
+import * as ServiceModule from "./service";
 
-describe('Component', () => {
+describe("Component", () => {
   let comp: Component;
   let service: StubbedInstance<ServiceModule.Service>;
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('Component', () => {
      */
     service = stubClassSingleton(ServiceModule, "Service");
     /**
-     * Here is the equivalent without the utility 
+     * Here is the equivalent without the utility
      */
     // sinon.stub(ServiceModule, "Service").returns(service = stubInterface<ServiceModule.Service>());
 
@@ -34,7 +34,7 @@ describe('Component', () => {
    */
   afterEach(() => sinon.restore());
 
-  it('should validate first parameter', () => {
+  it("should validate first parameter", () => {
     // Given
 
     // When
@@ -47,7 +47,7 @@ describe('Component', () => {
     expect(service.computeByBackend).to.have.not.been.called;
   });
 
-  it('should validate second parameter', () => {
+  it("should validate second parameter", () => {
     // Given
 
     // When
@@ -60,7 +60,7 @@ describe('Component', () => {
     expect(service.computeByBackend).to.have.not.been.called;
   });
 
-  it('should call the backend', () => {
+  it("should call the backend", () => {
     // Given
 
     // When

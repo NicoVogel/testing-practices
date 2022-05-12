@@ -1,12 +1,12 @@
-import sinon, { StubbedInstance, stubInterface } from 'ts-sinon';
-import { expect, use } from 'chai';
-import * as sinonChai from 'sinon-chai';
+import sinon, { StubbedInstance, stubInterface } from "ts-sinon";
+import { expect, use } from "chai";
+import * as sinonChai from "sinon-chai";
 use(sinonChai);
 
-import { Component } from './component';
-import { Service } from './service';
+import { Component } from "./component";
+import { Service } from "./service";
 
-describe('Component', () => {
+describe("Component", () => {
   let comp: Component;
   let service: StubbedInstance<Service>;
   beforeEach(() => {
@@ -19,12 +19,12 @@ describe('Component', () => {
   });
 
   /**
-   * When creating stubs (or spies or however they are called in the framework), 
+   * When creating stubs (or spies or however they are called in the framework),
    * then we need to clean up afterwards
    */
   afterEach(() => sinon.restore());
 
-  it('should validate first parameter', () => {
+  it("should validate first parameter", () => {
     // Given
 
     // When
@@ -37,7 +37,7 @@ describe('Component', () => {
     expect(service.computeByBackend).to.have.not.been.called;
   });
 
-  it('should validate second parameter', () => {
+  it("should validate second parameter", () => {
     // Given
 
     // When
@@ -50,7 +50,7 @@ describe('Component', () => {
     expect(service.computeByBackend).to.have.not.been.called;
   });
 
-  it('should call the backend', () => {
+  it("should call the backend", () => {
     // Given
 
     // When

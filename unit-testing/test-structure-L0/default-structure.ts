@@ -1,5 +1,5 @@
 export class DefaultStructure {
-  private name = 'world';
+  private name = "world";
 
   setName(name: string) {
     this.name = name;

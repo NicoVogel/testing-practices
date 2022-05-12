@@ -39,7 +39,7 @@ Now for JS unit testing there are three main frameworks for testing
 
 As this is a long discussion on its own, here a post that outlines the differences: [Comparing the top 3 Javascript testing frameworks](https://dev.to/heroku/comparing-the-top-3-javascript-testing-frameworks-2cco#:~:text=Mocha%2C%20Jest%2C%20and%20Jasmine%20are,and%20documentation%20available%20than%20Jest.)
 
-If you are not interested in reading the entire article, here the TLDR: 
+If you are not interested in reading the entire article, here the TLDR:
 
 > use what ever testing framework your project comes pre equipped with as they are pretty much feature equivalent and can all do the same things.
 
@@ -47,12 +47,12 @@ If you are not interested in reading the entire article, here the TLDR:
 
 - only behavior not functions!
   - never ever make a function public to test it!!
-  - get away from the idea of testing functions, you should only test behavior. 
-  Usually results in the same tests, but its a mindset difference. 
+  - get away from the idea of testing functions, you should only test behavior.
+  Usually results in the same tests, but its a mindset difference.
   You will not be tempted to write tests that make it hard for your code to change.
 - one context (usually one class)
   - if you split a class into sub classes, because it became to big, then thats an implementation detail and the sub classes are to be tested with the parent class!
-  - this allows to refactor your code. If you do not follow this approach, you create bridle unit tests which make it hard to refactor your code 
+  - this allows to refactor your code. If you do not follow this approach, you create bridle unit tests which make it hard to refactor your code
 
 ### What should you consider when creating a unit test?
 
@@ -95,7 +95,7 @@ I really forced myself to learn it and here are some of the key insights I want 
 
 ### How to get started?
 
-From a learning perspective it always makes sense to reduce the cognitive load for a given task and then continue from there. 
+From a learning perspective it always makes sense to reduce the cognitive load for a given task and then continue from there.
 When considering TDD, there are the following steps for one cycle:
 
 1. come up with a scenario that you want to test
@@ -103,10 +103,10 @@ When considering TDD, there are the following steps for one cycle:
 3. implement it (Green)
 4. make your code look nice (Refactor)
 
-At least for me the first part was really difficult at the start. 
+At least for me the first part was really difficult at the start.
 It was even more so when the thing that I wanted to tests did not yet exist.
 
-**My leaning to get started is**: Use Bugs to improve your TDD skill. 
+**My leaning to get started is**: Use Bugs to improve your TDD skill.
 
 A bug usually has a clear context and we already know what the outcome should be.
 Just pick an easy bug from your backlog that can be unit tests (not something like 'the color is wrong') and try it out.
