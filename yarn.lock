@@ -1773,6 +1773,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"testing-practices@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "testing-practices@workspace:."
+  dependencies:
+    "@types/chai": 4.1.3
+    "@types/mocha": 5.2.0
+    "@types/node": ^16.11.10
+    "@types/sinon": ^10.0.6
+    "@types/sinon-chai": ^3.2.6
+    "@yarnpkg/pnpify": ^4.0.0-rc.4
+    chai: 4.1.2
+    eslint: ^8.14.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.0.0
+    prettier: ^2.6.2
+    sinon: ^12.0.1
+    sinon-chai: ^3.7.0
+    ts-sinon: ^2.0.2
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
+
 "text-table@npm:^0.2.0":
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
@@ -1878,28 +1900,6 @@ __metadata:
   checksum: 1cb434fbc637d347be90e3a0c6cd05e33c38f941713c8786d3031faf1842c2c148ba91d2fac01e7276b0ae3249b8633f1660e32686cc7a8c6a8fd5361dc52c66
   languageName: node
   linkType: hard
-
-"unit-testing@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "unit-testing@workspace:."
-  dependencies:
-    "@types/chai": 4.1.3
-    "@types/mocha": 5.2.0
-    "@types/node": ^16.11.10
-    "@types/sinon": ^10.0.6
-    "@types/sinon-chai": ^3.2.6
-    "@yarnpkg/pnpify": ^4.0.0-rc.4
-    chai: 4.1.2
-    eslint: ^8.14.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.0.0
-    prettier: ^2.6.2
-    sinon: ^12.0.1
-    sinon-chai: ^3.7.0
-    ts-sinon: ^2.0.2
-    typescript: ^4.6.4
-  languageName: unknown
-  linkType: soft
 
 "uri-js@npm:^4.2.2":
   version: 4.4.1
