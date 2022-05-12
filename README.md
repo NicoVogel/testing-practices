@@ -98,6 +98,13 @@ When you write unit tests and it is complicated to even setup the test, then you
 So, unit tests can be a measurement of you application design.
 Components that are complex to prepare to test them usually are a good spot to look for refactoring opportunities.
 
+### How to write unit tests that interact with other units
+
+This Talk explains very well what should be tested via unit tests and what not: [🚀 Integrated Tests Are A Scam (J.B. Rainsberger) from 25:27 onwards](https://youtu.be/fhFa4tkFUFw?t=1527).
+The main goal of the talk is to present an alternative to most of the integration tests that are usually written in projects.
+But at the same time a lot of what he is talking about can be applied in regular unit tests.
+Therefore, I can only recommend watching it.
+
 ## E2E testing
 
 Not all scenarios can be addressed with unit tests.
