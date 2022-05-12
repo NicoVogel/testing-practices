@@ -45,11 +45,14 @@ If you are not interested in reading the entire article, here the TLDR:
 
 ### What parts of the code do you actually test?
 
-- only behavior not functions!
+- Only contracts not implementation!
+  - Get away from the idea of testing functions, you should only test contract that a function should resembles.
+    The contract of a function describe the rules of behavior (given input X, output Y can be expected).
+    Usually results in the same tests, but its a different mindset.
+  - You will not be tempted to write tests that make it hard for your code to change.
+- only public members!
   - never ever make a function public to test it!!
-  - get away from the idea of testing functions, you should only test behavior.
-  Usually results in the same tests, but its a mindset difference.
-  You will not be tempted to write tests that make it hard for your code to change.
+  - never ever check if a private attribute has a specific value!!
 - one context (usually one class)
   - if you split a class into sub classes, because it became to big, then thats an implementation detail and the sub classes are to be tested with the parent class!
   - this allows to refactor your code. If you do not follow this approach, you create bridle unit tests which make it hard to refactor your code
@@ -66,6 +69,12 @@ If you are not interested in reading the entire article, here the TLDR:
   Setting up the test is a special case, but as this is the same procedure for all tests, it is fine to have this in a separate function.
   But there are times where the setup depends on test data (see test-structure-L3)
 
+### Interesting observations
+
+When you write unit tests and it is complicated to even setup the test, then you know that you probably have bad design.
+So, unit tests can be a measurement of you application design.
+Components that are complex to prepare to test them usually are a good spot to look for refactoring opportunities.
+
 ## E2E testing
 
 Not all scenarios can be addressed with unit tests.
@@ -73,8 +82,6 @@ In such cases E2E tests come into play (I know that there are also integration t
 
 Now the main difference is that we are now no longer looking at isolated contexts, but rather at the entire system.
 Therefore, we also depend on other systems in such test cases, like database, file system or other external systems.
-
-
 
 ### What is part of an e2e test?
 
@@ -116,13 +123,47 @@ Hence reducing the cognitive load to learn TDD.
 ### What should you test via TDD?
 
 - acceptance criteria
+- units (do not use integration tests as much as possible)
+
+### What is the core benefit from my point of view?
+
+1. you guarantee that the acceptance criteria are met
+2. you have a much bigger change of designing your code in a simple way
+
+What do I mean with the second statement?
+
+When you think how to test a unit first, then the interface of the unit automatically is cleaner, compared to writing the tests afterwards.
+The main reason being that you think of the interface first and then implement it (while normally you think of the implementation first).
 
 ### Why should you do it?
 
-There are plenty good resources out there that explain in great detail what de benefit of TDD is.
+There are plenty good resources out there that explain in great detail what other benefit of TDD there is.
 Therefore, I will not repeat what others explain so well.
 But here are some good talks if you are interested:
 
 - [TDD Revisited - Ian Cooper - NDC London 2021](https://www.youtube.com/watch?v=vOO3hulIcsY)
 - [🚀 Does TDD Really Lead to Good Design? (Sandro Mancuso)](https://www.youtube.com/watch?v=KyFVA4Spcgg)
 - [Test Driven Development in Vue with Cypress by Josh Justice](https://www.youtube.com/watch?v=MU7K_V6rFjM)
+
+## Integration tests
+
+You should not write integration tests (in most of the cases).
+A good explanation is this: [🚀 Integrated Tests Are A Scam (J.B. Rainsberger)](https://www.youtube.com/watch?v=fhFa4tkFUFw)
+
+**TLDW (Too Long Didn't Watch):**
+
+- Do not rely on integration tests to check the basic correctness of your code
+- use system tests (e2e) to check the system
+- use micro-tests (unit) to check components
+
+**What is my take on this**:
+
+I believe that maintaining integration tests is a lot harder.
+As they are designed to only address a certain part of the system and therefore contain pre preperception of how the system is build.
+
+Lets imagine your work on a system with a "good" amount of tests and 100% of them pass, but you still get bugs.
+Thats commonly the case if you have integration tests with preperception of how it should function, instead of really checking it (basically the same downside as with unit tests).
+
+As there are cases where it makes sense to use unit testing to validate logic, there is also a place for integration tests.
+For example you create a mock backend and test the frontend with cypress to check some behavior with multiple edge cases and that is hard to setup from the backend.
+But they should be used sparely, as the degrade over time when the system evolves and you need to remember to update them (which usually does not happen).
