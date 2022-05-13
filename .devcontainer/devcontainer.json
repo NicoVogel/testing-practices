@@ -38,7 +38,9 @@
     "streetsidesoftware.code-spell-checker",
     "yzhang.markdown-all-in-one",
     "eamodio.gitlens",
-    "EditorConfig.EditorConfig"
+    "EditorConfig.EditorConfig",
+    "evilz.vscode-reveal",
+    "christian-kohler.path-intellisense"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
