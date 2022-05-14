@@ -123,7 +123,6 @@ gulp.task('plugins', () => {
     { name: 'RevealSearch', input: './presentation/plugin/search/plugin.js', output: './presentation/plugin/search/search' },
     { name: 'RevealNotes', input: './presentation/plugin/notes/plugin.js', output: './presentation/plugin/notes/notes' },
     { name: 'RevealZoom', input: './presentation/plugin/zoom/plugin.js', output: './presentation/plugin/zoom/zoom' },
-    { name: 'RevealMath', input: './presentation/plugin/math/plugin.js', output: './presentation/plugin/math/math' },
   ].map(plugin => {
     return rollup({
       cache: cache[plugin.input],
