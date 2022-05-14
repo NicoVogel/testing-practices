@@ -2,7 +2,7 @@
   "name": "testing-practices",
   "version": "0.0.0",
   "private": true,
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.2.1",
   "subdomain": "revealjs",
   "main": "presentation/dist/reveal.js",
   "module": "presentation/dist/reveal.esm.js",
