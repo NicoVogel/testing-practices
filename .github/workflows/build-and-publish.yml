@@ -12,20 +12,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
 
       - name: Build slides
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
 
       - name: Checkout pages
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           ref: pages
           path: pages
@@ -41,6 +41,6 @@ jobs:
           cp presentation/index.html pages/index.html
 
       - name: Commit changes to pages branch
-      - uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v9
         with:
           cwd: pages
