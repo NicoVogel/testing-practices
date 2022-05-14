@@ -1,0 +1,46 @@
+name: publish slides
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "presentation/*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+
+      - name: Build slides
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+
+      - name: Checkout pages
+      - uses: actions/checkout@v3
+        with:
+          ref: pages
+          path: pages
+
+      - name: Copy build slides
+        run: |
+          rm -rf pages/*
+          mkdir -p pages/dist
+          cp -r presentation/dist/* pages/dist
+          find presentation/plugin -type f \( -iname "*.js" ! -iname "plugin.js" \) -print \
+          | sed 's_presentation/plugin__' \
+          | xargs -I@ bash -c 'a=$(echo @ | sed -E "s_(\w|\.)+\.js__"); mkdir -p pages/plugin$a ;cp presentation/plugin@ pages/plugin$a'
+          cp presentation/index.html pages/index.html
+
+      - name: Commit changes to pages branch
+      - uses: EndBug/add-and-commit@v9
+        with:
+          cwd: pages
