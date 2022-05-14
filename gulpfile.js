@@ -190,11 +190,11 @@ gulp.task('css-core', () => gulp.src(['presentation/css/reveal.scss'])
   .pipe(autoprefixer())
   .pipe(minify({ compatibility: 'ie9' }))
   .pipe(header(banner))
-  .pipe(gulp.dest('./dist')))
+  .pipe(gulp.dest('./presentation/dist')))
 
 gulp.task('css', gulp.parallel('css-themes', 'css-core'))
 
-gulp.task('eslint', () => gulp.src(['.presentation//js/**', 'gulpfile.js'])
+gulp.task('eslint', () => gulp.src(['./presentation/js/**', 'gulpfile.js'])
   .pipe(eslint())
   .pipe(eslint.format()))
 
