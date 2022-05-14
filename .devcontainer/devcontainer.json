@@ -40,7 +40,8 @@
     "eamodio.gitlens",
     "EditorConfig.EditorConfig",
     "evilz.vscode-reveal",
-    "christian-kohler.path-intellisense"
+    "christian-kohler.path-intellisense",
+    "cschleiden.vscode-github-actions"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
