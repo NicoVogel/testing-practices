@@ -1,5 +1,3 @@
-# Custom
-!/presentation/dist
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,visualstudiocode,yarn
@@ -187,3 +185,8 @@ dist
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,yarn
+
+# Custom
+!presentation/dist
+presentation/dist/*
+!presentation/dist/reset.css
