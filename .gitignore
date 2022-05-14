@@ -190,3 +190,6 @@ dist
 !presentation/dist
 presentation/dist/*
 !presentation/dist/reset.css
+!presentation/dist/theme
+presentation/dist/theme/*
+!presentation/dist/theme/fonts
