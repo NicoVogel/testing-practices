@@ -16,6 +16,7 @@ const eslint = require('gulp-eslint')
 const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
+const pug = require('gulp-pug-3');
 
 const root = yargs.argv.root || 'presentation'
 const port = yargs.argv.port || 8000
@@ -194,7 +195,9 @@ gulp.task('eslint', () => gulp.src(['./presentation/js/**', 'gulpfile.js'])
 
 gulp.task('default', gulp.series(gulp.parallel('js', 'css', 'plugins')))
 
-gulp.task('build', gulp.parallel('js', 'css', 'plugins'))
+gulp.task('html', () => gulp.src('./presentation/pug/index.pug').pipe(pug({})).pipe(gulp.dest('./presentation')))
+
+gulp.task('build', gulp.parallel('js', 'css', 'plugins', 'html'))
 
 gulp.task('package', gulp.series(() =>
 
@@ -225,7 +228,9 @@ gulp.task('serve', () => {
     livereload: true
   })
 
-  gulp.watch(['presentation/*.html', 'presentation/*.md'], gulp.series('reload'))
+  gulp.watch(['presentation/*.html'], gulp.series('reload'))
+
+  gulp.watch(['presentation/pug/**'], gulp.series('html'));
 
   gulp.watch(['presentation/js/**'], gulp.series('js', 'reload', 'eslint'))
 

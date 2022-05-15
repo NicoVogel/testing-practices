@@ -193,3 +193,5 @@ presentation/dist/*
 !presentation/dist/theme
 presentation/dist/theme/*
 !presentation/dist/theme/fonts
+
+presentation/index.html
