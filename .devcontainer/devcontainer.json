@@ -27,6 +27,10 @@
       "editor.unicodeHighlight.invisibleCharacters": false,
       "editor.wordWrap": "on",
       "editor.quickSuggestions": false
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[jade]": {
+      "editor.defaultFormatter": "ducfilan.pug-formatter"
     }
   },
 
@@ -39,7 +43,7 @@
     "yzhang.markdown-all-in-one",
     "eamodio.gitlens",
     "EditorConfig.EditorConfig",
-    "evilz.vscode-reveal",
+    "ducfilan.pug-formatter",
     "christian-kohler.path-intellisense",
     "cschleiden.vscode-github-actions"
   ],
