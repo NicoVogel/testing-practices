@@ -35,6 +35,7 @@ jobs:
         run: |
           rm -rf pages/*
           mkdir -p pages/dist
+          mkdir -p pages/img
           cp -r presentation/dist/* pages/dist
           cp -r presentation/img/* pages/img
           find presentation/plugin -type f \( -iname "*.js" ! -iname "plugin.js" \) -print | \
