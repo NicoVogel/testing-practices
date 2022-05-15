@@ -40,6 +40,7 @@ jobs:
             sed 's_presentation/plugin__' | \
             xargs -I@ bash -c 'a=$(echo @ | sed -E "s_(\w|\.)+\.js__"); mkdir -p pages/plugin$a ;cp presentation/plugin@ pages/plugin$a'
           cp presentation/index.html pages/index.html
+          cp presentation/plugin/highlight/*.css pages/plugin/highlight
 
       - name: Commit changes to pages branch
         uses: EndBug/add-and-commit@v9
