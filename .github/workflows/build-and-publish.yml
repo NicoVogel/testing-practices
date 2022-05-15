@@ -36,6 +36,7 @@ jobs:
           rm -rf pages/*
           mkdir -p pages/dist
           cp -r presentation/dist/* pages/dist
+          cp -r presentation/img/* pages/img
           find presentation/plugin -type f \( -iname "*.js" ! -iname "plugin.js" \) -print | \
             sed 's_presentation/plugin__' | \
             xargs -I@ bash -c 'a=$(echo @ | sed -E "s_(\w|\.)+\.js__"); mkdir -p pages/plugin$a ;cp presentation/plugin@ pages/plugin$a'
