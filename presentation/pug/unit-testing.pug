@@ -1,9 +1,66 @@
 section
   section
     h1 Unit testing
+    aside(class='notes').
+      Unit testing is a skill that takes practice, but is sadly
+      hardly addressed in university.
 
   section
     h1 What is unit testing?
     p.
       A practice to test parts of your code independently
       and quickly from other parts.
+    aside(class='notes').
+      Even tough this statement might seem straight forward at first
+      glance, there are multiple nuances to this skill and I will
+      outline some of them.
+
+  section
+    h1 What do you actually test?
+    ul
+      li class's?
+      li functions?
+      li attributes?
+    aside(class='notes').
+      What do you think, which of these do we test?
+      As always, the answer is: (next slide)
+
+  section
+    h1 It depends
+
+  section
+    img(class='r-stretch' src='/img/thank-you-captain-obvious-meme.jpg')
+
+  section
+    p What do you actually test?
+    h1 A context
+
+  section
+    h1 What is a context?
+    p.
+      It can be a class or a function.
+      But not all classes or functions count as context!
+    aside(class='notes').
+      For simplicity, lets look at just a class for now.
+
+  section
+    p.
+      Imagine you work on a feature and your class gets bigger and bigger.
+      At some point you decide this is no longer understandable and you split
+      the class into multiple classes.
+    h1 The context is the main class that embeddes the other classes.
+    blockquote As the other classes are just implementation details
+
+
+
+  section
+    h1 What are contracts?
+    p A contract in computer science has:
+    ul
+      li pre-condition -> fulfilled before an action
+      li post-condition -> fulfilled after an action
+      li invariants -> always true
+
+  section
+    h1
+
