@@ -1,66 +1,149 @@
 section
-  section
-    h1 Unit testing
-    aside(class='notes').
-      Unit testing is a skill that takes practice, but is sadly
-      hardly addressed in university.
+  h1 Unit testing
+  aside(class='notes').
+    Unit testing is a skill that takes practice, but is sadly
+    hardly addressed in university.
 
-  section
-    h1 What is unit testing?
-    p.
-      A practice to test parts of your code independently
-      and quickly from other parts.
-    aside(class='notes').
-      Even tough this statement might seem straight forward at first
-      glance, there are multiple nuances to this skill and I will
-      outline some of them.
+section
+  h1 What is unit testing?
+  p.
+    A practice to test parts of your code quickly.
+  aside(class='notes').
+    Even tough this statement might seem straight forward at first
+    glance, there are multiple nuances to this skill and I will
+    outline some of them.
 
+section
   section
-    h1 What do you actually test?
+    h1 What should you actually test?
     ul
       li class's?
       li functions?
       li attributes?
+      li services?
+      li components?
+      li ...?
     aside(class='notes').
+      The fist thing to understand is what are we actually testing in unit tests
       What do you think, which of these do we test?
       As always, the answer is: (next slide)
 
   section
-    h1 It depends
-
-  section
-    img(class='r-stretch' src='/img/thank-you-captain-obvious-meme.jpg')
-
-  section
     p What do you actually test?
-    h1 A context
+    h1 Behavior
+    aside(class='notes').
+      This is a clear must do and it should not be open to debate.
 
   section
-    h1 What is a context?
+    img(class='r-stretch' src='/img/confused-meme.jpg' style='background: white')
+
+  section
+    h1 How to test behavior?
+    ul
+      li ensure that the system is in the correct state
+      li execute some action
+      li expect that the system changed according to the behavior
     p.
-      It can be a class or a function.
-      But not all classes or functions count as context!
+      Most of the time its calling a function or an objects method.
+
+  section
+    h1 Common mistakes to avoid
+    ul
+      li testing every function of a class
+      li testing every attribute of a class
+      li making assertions that some internal stuff happens in a class
     aside(class='notes').
-      For simplicity, lets look at just a class for now.
+      Lets look at an example.
 
   section
     p.
       Imagine you work on a feature and your class gets bigger and bigger.
       At some point you decide this is no longer understandable and you split
-      the class into multiple classes.
-    h1 The context is the main class that embeddes the other classes.
-    blockquote As the other classes are just implementation details
-
-
+      the class into multiple classes with one class (Main) that handles the others.
+    p
+      b Test do not change for refactor
+    blockquote.
+      As the other classes are just implementation details
+      they should not be mocked.
+    aside(class='notes').
+      You should not even write tests for such implementations.
+      In case that you want or need to test them, you need to mark them
+      in some way that they are deleted if needed, as they only reflect a
+      partial behavior.
 
   section
-    h1 What are contracts?
-    p A contract in computer science has:
-    ul
-      li pre-condition -> fulfilled before an action
-      li post-condition -> fulfilled after an action
-      li invariants -> always true
+    h1 Don't test implementation details
+    p.
+      The sub classes don't need tests.
+      If you want to test them anyways, then mark the tests as
+      "throw away" or something similar.
+    aside(class='notes').
+      Whenever implementation details a^^re tested, then you need to
+      expect that you need to remove the tests when the code is refactored.
+
+  section
+    h1 What are the benefits of this?
+    p.
+      Tests only break if you change the behavior of the system
+      and not if you refactor code
+
+
+section
+  h1 How should you structure your tests?
+  p Rather common for structuring you tests is:
+  ul
+    li Given (Arrange)
+    li When (Act)
+    li Then (Assert)
+  blockquote.
+    A behavior test tends to only include one assertions (rarely more).
+
+section
+  h1 Higher level test structures
+  p There are two options I know of:
+  ul
+    li Contract tests
+    li Sociable tests
+  aside(class='notes').
+    Or you could also call it mindsets.
+    Just creating tests is fine, but its still possible that in the end
+    your tests succeed, but in production errors come up.
+    Following one of these higher level test structures can further
+    harden your testing.
+
+    You don't need to use any of these approaches and they can even be
+    considered "ugly" by some people
+
+section
+  section
+    h1 Contract tests
+    img(class='r-stretch' src='/img/cdc-testing.png' style='background: white')
+    aside(class='notes').
+      Some might know this from the backend to test micro services.
+
+      But we often forget that whenever we mock something, then
+      this also applies to our tests.
+
+      At least the left part is usually considered when creating tests
+
+      -> img source: https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
+
+  //- section
+  //-   h1 What are contracts?
+  //-   p A contract in computer science has:
+  //-   ul
+  //-     li pre-condition -> fulfilled before an action
+  //-     li post-condition -> fulfilled after an action
+  //-     li invariants -> always true
+
+  section
+    h1 How to apply contracts testing?
+    p.
+      When
+
 
   section
     h1
+
+//- user gerny
 
