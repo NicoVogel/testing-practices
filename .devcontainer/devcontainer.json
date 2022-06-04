@@ -29,6 +29,7 @@
       "editor.quickSuggestions": false
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "emmet.excludeLanguages": ["jade"],
     "[jade]": {
       "editor.defaultFormatter": "ducfilan.pug-formatter"
     }
