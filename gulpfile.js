@@ -7,6 +7,7 @@ const { terser } = require('rollup-plugin-terser')
 const babel = require('@rollup/plugin-babel').default
 const commonjs = require('@rollup/plugin-commonjs')
 const resolve = require('@rollup/plugin-node-resolve').default
+const nodePolyfills = require('rollup-plugin-polyfill-node');
 const sass = require('sass')
 
 const gulp = require('gulp')
@@ -117,6 +118,8 @@ gulp.task('js', gulp.parallel('js-es5', 'js-es6'));
 
 // Creates a UMD and ES module bundle for each of our
 // built-in plugins
+const nodeModulesThatShouldBeIncluded = ['highlight\\.js', 'marked', 'plantuml-encoder'];
+const nodeModulesIgnore = new RegExp(`node_modules\\/(?!(${nodeModulesThatShouldBeIncluded.join('|')})\\/).*/`)
 gulp.task('plugins', () => {
   return Promise.all([
     { name: 'RevealHighlight', input: './presentation/plugin/highlight/plugin.js', output: './presentation/plugin/highlight/highlight' },
@@ -133,7 +136,7 @@ gulp.task('plugins', () => {
         commonjs(),
         babel({
           ...babelConfig,
-          ignore: [/node_modules\/(?!(highlight\.js|marked)\/).*/],
+          ignore: [nodeModulesIgnore],
         }),
         terser()
       ]

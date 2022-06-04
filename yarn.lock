@@ -7501,6 +7501,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"plantuml-encoder@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "plantuml-encoder@npm:1.4.0"
+  checksum: d0ad77d960a8b092d8cfe9bdefc7a482ec073ecc686a92e482a8cbe35183d42433e79efd61fe24859ebd3219859d7fe022d49aaeec8827d46fde2ae4e7dba461
+  languageName: node
+  linkType: hard
+
 "plugin-error@npm:1.0.1, plugin-error@npm:^1.0.1":
   version: 1.0.1
   resolution: "plugin-error@npm:1.0.1"
@@ -9303,6 +9310,7 @@ __metadata:
     gulp-zip: ^4.2.0
     highlight.js: ^10.0.3
     marked: ^4.0.12
+    plantuml-encoder: ^1.4.0
     prettier: ^2.6.2
     pug: ^3.0.2
     pug-cli: ^1.0.0-alpha6

@@ -46,6 +46,7 @@
     "gulp-zip": "^4.2.0",
     "highlight.js": "^10.0.3",
     "marked": "^4.0.12",
+    "plantuml-encoder": "^1.4.0",
     "prettier": "^2.6.2",
     "pug": "^3.0.2",
     "pug-cli": "^1.0.0-alpha6",
