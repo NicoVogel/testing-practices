@@ -47,7 +47,7 @@ jobs:
       - name: Rewrite base href
         uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
         with:
-          html_path: 'index.html'
+          html_path: 'pages/index.html'
           base_href: '/testing-practices/'
 
       - name: Commit changes to pages branch
