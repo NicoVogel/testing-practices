@@ -347,7 +347,67 @@ describe("L3", () => {
   });
 });
 </code></pre></section><section data-auto-animate data-auto-animate-id="L3"><h3 class="level" data-id="code-title">L3: Test setup dependency</h3><p>Usually needed when you want to test something within the constructor
-or for L6</p></section></section><section><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
+or for L4/L6
+</p></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="">export function hasElement(
+  items: (number | string)[],
+  value: number | string
+): boolean {
+  return !!items.find((x) => x === value);
+}
+
+</code></pre></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="8-16">export function hasElement(
+  items: (number | string)[],
+  value: number | string
+): boolean {
+  return !!items.find((x) => x === value);
+}
+
+describe("L4", () => {
+  describe("number values", () => {
+
+  });
+  describe("string values", () => {
+
+  });
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="10-19|22-31">export function hasElement(
+  items: (number | string)[],
+  value: number | string
+): boolean {
+  return !!items.find((x) => x === value);
+}
+
+describe("L4", () => {
+  describe("number values", () => {
+    it("should find value", () => {
+      // Given
+      const items = [1, 2, "3", "4"];
+
+      // When
+      const result = hasElement(items, 1);
+
+      // Then
+      expect(result).to.be.true;
+    });
+  });
+  describe("string values", () => {
+    it("should find value", () => {
+      // Given
+      const items = [1, 2, "3", "4"];
+
+      // When
+      const result = hasElement(items, "3");
+
+      // Then
+      expect(result).to.be.true;
+    });
+  });
+});
+</code></pre></section><style>.l4-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr
+}
+</style><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><div class="l4-container"><ul data-id="order"><li>describe</li><ul><li>beforeEach (1)</li><li>before (2)</li><li>it (3)</li></ul></ul></div></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><div class="l4-container"><ul data-id="order"><li>describe</li><ul><li>beforeEach (1)</li><li>before (2)</li><li>it (3)</li></ul></ul><p data-id="order-result">2,1,3</p></div></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><div class="l4-container"><ul data-id="order"><li>describe</li><ul><li>beforeEach (1)</li><li>before (2)</li><li>it (3)</li><li>describe</li><ul><li>afterEach (4)</li><li>it (5)</li><li>it (6)</li></ul><li>describe</li><ul><li>beforeEach (7)</li><li>it (8)</li><li>it (9)</li></ul></ul></ul></div></section><section data-auto-animate data-auto-animate-id="L4"><h3 class="level" data-id="code-title">L4: Multi level describes</h3><div class="l4-container"><ul data-id="order"><li>describe</li><ul><li>beforeEach (1)</li><li>before (2)</li><li>it (3)</li><li>describe</li><ul><li>afterEach (4)</li><li>it (5)</li><li>it (6)</li></ul><li>describe</li><ul><li>beforeEach (7)</li><li>it (8)</li><li>it (9)</li></ul></ul></ul><p data-id="order-result">2, <br>(1,3), <br>(1,5,4,6,4), <br>(1,7,8,7,9)</p></div></section></section><section><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
 Just creating tests is fine, but its still possible that in the end
 your tests succeed, but in production errors come up.
 Following one of these higher level test structures can further
