@@ -23,10 +23,29 @@ If you want to test them anyways, then mark the tests as
 "throw away" or something similar.</p><aside class="notes">Whenever implementation details a^^re tested, then you need to
 expect that you need to remove the tests when the code is refactored.
 </aside></section><section><h1>What are the benefits of this?</h1><p>Tests only break if you change the behavior of the system
-and not if you refactor code
+and not if you refactor code</p></section></section><section><section><h1>How should you structure your tests?</h1><ul><li>A test</li><li>A test file</li></ul></section><section><h1>Test structure</h1><ul><li>Given (Arrange)</li><li>When (Act)</li><li>Then (Assert)</li></ul><blockquote>A behavior test tends to only include one assertions (rarely more).
+</blockquote></section><style>ol.level, h1.level {
+  counter-reset: item -1;
+  list-style-type: none;
+}
 
-</p></section></section><section><h1>How should you structure your tests?</h1><p>Rather common for structuring you tests is:</p><ul><li>Given (Arrange)</li><li>When (Act)</li><li>Then (Assert)</li></ul><blockquote>A behavior test tends to only include one assertions (rarely more).
-</blockquote></section><section><h1>Higher level test structures</h1><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
+ol.level li:before, h1.level::before {
+  content: 'L' counter(item, decimal) ': ';
+  counter-increment: item;
+}
+</style><section><h1>Test file structure</h1><ol class="level"><li>Getting familiar</li><li>Depend on class (DI)</li><li>Depend on class internal</li><li>Test setup dependency</li><li>Multi level describes</li><li>Async tests</li><li>Automate test creation</li></ol></section><section><h1>Getting familiar</h1><pre><code class="language-javascript">describe("L0", ()=>{
+  let sut: Component;
+
+  beforeEach(()=> sut = new Component());
+
+  it("should return hello world", ()=>{
+    // Given
+    // When
+    const result = sut.greet();
+    // Then
+    expect(result).to.equal("hello world");
+  })
+});</code></pre></section></section><section><h1>Higher level test structures</h1><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
 Just creating tests is fine, but its still possible that in the end
 your tests succeed, but in production errors come up.
 Following one of these higher level test structures can further
@@ -42,9 +61,15 @@ this also applies to our tests.
 At least the left part is usually considered when creating tests
 
 -> img source: https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
-</aside></section><section><h1>How to apply contracts testing?</h1><p>When
+</aside></section><section><h1>Example 1</h1><pre><code class="language-plantuml r-stretch">@startuml
+Alice -> Bob: test
+Bob --> Alice: Authentication Response
+Alice -> Bob: Another authentication Request
+Bob --> Alice: Another authentication Response
+@enduml
+</code></pre></section><section><h1>How to apply contracts testing?</h1><p>When
 
 </p></section><section><h1></h1></section></section><section><section><h1>E2E testing</h1><p>End 2 End testing</p></section><section><h1>What is E2E testing?</h1></section><section><h1>How is it different from unit testing?</h1></section></section><section><section><h1>TDD</h1><p>Test Driven Development</p></section><section><h1>What is TDD?</h1></section></section></div></div><script src="dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/markdown/markdown.js"></script><script src="plugin/highlight/highlight.js"></script><script>Reveal.initialize( {
   hash: true,
-  plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+  plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 } );</script></body></html>
