@@ -1,0 +1,45 @@
+
+section
+  section
+    h1 Contract tests
+    img(class='r-stretch' src='/img/cdc-testing.png' style='background: white')
+    aside(class='notes').
+      Some might know this from the backend to test micro services.
+
+      But we often forget that whenever we mock something, then
+      this also applies to our tests.
+
+      At least the left part is usually considered when creating tests
+
+      -> img source: https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
+
+  //- section
+  //-   h1 What are contracts?
+  //-   p A contract in computer science has:
+  //-   ul
+  //-     li pre-condition -> fulfilled before an action
+  //-     li post-condition -> fulfilled after an action
+  //-     li invariants -> always true
+
+  section
+    h1 Example 1
+    pre
+      code(class="language-plantuml r-stretch").
+        @startuml
+        Alice -> Bob: test
+        Bob --> Alice: Authentication Response
+        Alice -> Bob: Another authentication Request
+        Bob --> Alice: Another authentication Response
+        @enduml
+
+  section
+    h1 How to apply contracts testing?
+    p.
+      When
+
+
+  section
+    h1
+
+//- user gerny
+

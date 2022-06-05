@@ -1,0 +1,35 @@
+section
+  h1 Unit testing
+  aside(class='notes').
+    Unit testing is a skill that takes practice, but is sadly
+    hardly addressed in university.
+
+section
+  h1 What is unit testing?
+  p.
+    A practice to test parts of your code quickly.
+  aside(class='notes').
+    Even tough this statement might seem straight forward at first
+    glance, there are multiple nuances to this skill and I will
+    outline some of them.
+
+include ./what-to-test.pug
+include ./structure.pug
+
+section
+  h1 Higher level test structures
+  p There are two options I know of:
+  ul
+    li Contract tests
+    li Sociable tests
+  aside(class='notes').
+    Or you could also call it mindsets.
+    Just creating tests is fine, but its still possible that in the end
+    your tests succeed, but in production errors come up.
+    Following one of these higher level test structures can further
+    harden your testing.
+
+    You don't need to use any of these approaches and they can even be
+    considered "ugly" by some people
+
+include ./contract-tests.pug

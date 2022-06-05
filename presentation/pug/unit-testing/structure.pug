@@ -1,0 +1,56 @@
+
+section
+  section
+    h1 How should you structure your tests?
+    ul
+      li A test
+      li A test file
+
+  section
+    h1 Test structure
+    ul
+      li Given (Arrange)
+      li When (Act)
+      li Then (Assert)
+    blockquote.
+      A behavior test tends to only include one assertions (rarely more).
+
+  style.
+    ol.level, h1.level {
+      counter-reset: item -1;
+      list-style-type: none;
+    }
+
+    ol.level li:before, h1.level::before {
+      content: 'L' counter(item, decimal) ': ';
+      counter-increment: item;
+    }
+
+  section
+    h1 Test file structure
+    ol(class='level')
+      li Getting familiar
+      li Depend on class (DI)
+      li Depend on class internal
+      li Test setup dependency
+      li Multi level describes
+      li Async tests
+      li Automate test creation
+
+  section
+    h1 Getting familiar
+    pre
+      code(class='language-javascript').
+        describe("L0", ()=>{
+          let sut: Component;
+
+          beforeEach(()=> sut = new Component());
+
+          it("should return hello world", ()=>{
+            // Given
+            // When
+            const result = sut.greet();
+            // Then
+            expect(result).to.equal("hello world");
+          })
+        });
