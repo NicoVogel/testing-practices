@@ -24,28 +24,330 @@ If you want to test them anyways, then mark the tests as
 expect that you need to remove the tests when the code is refactored.
 </aside></section><section><h3>What are the benefits of this?</h3><p>Tests only break if you change the behavior of the system
 and not if you refactor code</p></section></section><section><section><h2>How should you structure your tests?</h2><ul><li>A test</li><li>A test file</li></ul></section><section><h3>Test structure</h3><ul><li>Given (Arrange)</li><li>When (Act)</li><li>Then (Assert)</li></ul><blockquote>A behavior test tends to only include one assertions (rarely more).
-</blockquote></section><style>ol.level, h1.level {
+</blockquote></section><style>ol.level {
   counter-reset: item -1;
   list-style-type: none;
 }
 
-ol.level li:before, h1.level::before {
+ol.level li:before {
   content: 'L' counter(item, decimal) ': ';
   counter-increment: item;
 }
-</style><section><h3>Test file structure</h3><ol class="level"><li>Getting familiar</li><li>Depend on class (DI)</li><li>Depend on class internal</li><li>Test setup dependency</li><li>Multi level describes</li><li>Async tests</li><li>Automate test creation</li></ol></section><section><h3>Getting familiar</h3><pre><code class="language-javascript">describe("L0", ()=>{
+</style><section><h3>Test file structure</h3><ol class="level"><li>Getting familiar</li><li>Depend on class (DI)</li><li>Depend on class internal</li><li>Test setup dependency</li><li>Multi level describes</li><li>Async tests</li><li>Automate test creation</li></ol></section><section data-auto-animate data-auto-animate-id="L0"><h3 class="level" data-id="code-title">L0: Getting familiar</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="">class Component {
+  greet() { return "hello world"; }
+}
+
+</code></pre></section><section data-auto-animate data-auto-animate-id="L0"><h3 class="level" data-id="code-title">L0: Getting familiar</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="5-9">class Component {
+  greet() { return "hello world"; }
+}
+
+describe("L0", () => {
   let sut: Component;
 
-  beforeEach(()=> sut = new Component());
+  beforeEach(() => sut = new Component());
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L0"><h3 class="level" data-id="code-title">L0: Getting familiar</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="10-13">class Component {
+  greet() { return "hello world"; }
+}
 
-  it("should return hello world", ()=>{
+describe("L0", () => {
+  let sut: Component;
+
+  beforeEach(() => sut = new Component());
+
+  it("should return hello world", () => {
+    const result = sut.greet();
+    expect(result).to.equal("hello world");
+  });
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L0"><h3 class="level" data-id="code-title">L0: Getting familiar</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="10-18">class Component {
+  greet() { return "hello world"; }
+}
+
+describe("L0", () => {
+  let sut: Component;
+
+  beforeEach(() => sut = new Component());
+
+  it("should return hello world", () => {
     // Given
+
     // When
     const result = sut.greet();
+
     // Then
     expect(result).to.equal("hello world");
+  });
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L1"><h3 class="level" data-id="code-title">L1: Depend on class (DI)</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="|7,16">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+</code></pre></section><section data-auto-animate data-auto-animate-id="L1"><h3 class="level" data-id="code-title">L1: Depend on class (DI)</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="21-31|23,26,29">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+describe("L1", () => {
+  let sut: Component;
+  let service: StubbedInstance&lt;Service>;
+
+  beforeEach(() => {
+    service = stubInterface&lt;Service>;
+    sut = new Component(service);
+  });
+  afterEach(() => sinon.restore());
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L1"><h3 class="level" data-id="code-title">L1: Depend on class (DI)</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="31-40">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+describe("L1", () => {
+  let sut: Component;
+  let service: StubbedInstance&lt;Service>;
+
+  beforeEach(() => {
+    service = stubInterface&lt;Service>;
+    sut = new Component(service);
+  });
+  afterEach(() => sinon.restore());
+
+  it("should process empty items", () => {
+    // Given
+    service.getItems.return([]);
+
+    // When
+    const result = sut.getGroupedItems();
+
+    // Then
+    expect(result).to.equal(new Map());
   })
-});</code></pre></section></section><section><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L2"><h3 class="level" data-id="code-title">L2: Depend on class internal</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="|6-7">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  private service = new Service();
+  // constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+</code></pre></section><section data-auto-animate data-auto-animate-id="L2"><h3 class="level" data-id="code-title">L2: Depend on class internal</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="22-35|22,30-31">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  private service = new Service();
+  // constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+import * as ServiceModule from './service';
+
+describe("L2", () => {
+  let sut: Component;
+  let service: StubbedInstance&lt;Service>;
+
+  beforeEach(() => {
+    service = stubInterface&lt;Service>;
+    // Override what the constructor of Service returns
+    sinon.stub(ServiceModule, "Service").returns(service);
+    sut = new Component(service);
+  });
+  afterEach(() => sinon.restore());
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L2"><h3 class="level" data-id="code-title">L2: Depend on class internal</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="36-45">class Service {
+  getItems() { return fetch('www.get-items.com'); }
+}
+
+class Component {
+  private service = new Service();
+  // constructor(private service: Service) { }
+  getGroupedItems() {
+    return this.service.getItems()
+      .then(response => response.json())
+      .then(items => items.reduce(
+        (map, item) => {
+          const group = map.get(item.group) ?? [];
+          group.push(item);
+          map.set(item.group, group);
+          return map;
+        }, new Map())
+      );
+  }
+}
+
+import * as ServiceModule from './service';
+
+describe("L2", () => {
+  let sut: Component;
+  let service: Service;
+
+  beforeEach(() => {
+    service = stubInterface&lt;Service>;
+    // Override what the constructor of Service returns
+    sinon.stub(ServiceModule, "Service").returns(service);
+    sut = new Component(service);
+  });
+  afterEach(() => sinon.restore());
+
+  it("should process empty items", () => {
+    // Given
+    service.getItems.return([]);
+
+    // When
+    const result = sut.getGroupedItems();
+
+    // Then
+    expect(result).to.equal(new Map());
+  })
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L2"><h3 class="level" data-id="code-title">L2: Depend on class internal</h3><p>Try to avoid this style as it makes tests needlessly complex</p><p>Use Dependency Injection instead to keep tests clean</p></section><section data-auto-animate data-auto-animate-id="L3"><h3 class="level" data-id="code-title">L3: Test setup dependency</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="|8,12">class Component {}
+  public readonly id: number;
+
+  constructor(url: string) {
+    const urlWrapper = new URL(url);
+    const idParam = urlWrapper.searchParams.get("id");
+    if (!idParam) {
+      throw new Error('The id parameter is required');
+    }
+    const parsedId = +idParam;
+    if (Object.is(parsedId, NaN)) {
+      throw new Error('The id parameter is not a number');
+    }
+    this.id = parsedId;
+  }
+}
+
+</code></pre></section><section data-auto-animate data-auto-animate-id="L3"><h3 class="level" data-id="code-title">L3: Test setup dependency</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="18-23">class Component {}
+  public readonly id: number;
+
+  constructor(url: string) {
+    const urlWrapper = new URL(url);
+    const idParam = urlWrapper.searchParams.get("id");
+    if (!idParam) {
+      throw new Error('The id parameter is required');
+    }
+    const parsedId = +idParam;
+    if (Object.is(parsedId, NaN)) {
+      throw new Error('The id parameter is not a number');
+    }
+    this.id = parsedId;
+  }
+}
+
+describe("L3", () => {
+  let sut: Component;
+  const initTest = (url) => {
+    sut = new Component(url);
+  }
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L3"><h3 class="level" data-id="code-title">L3: Test setup dependency</h3><pre data-id="code-animation"><code class="language-typescript" data-line-numbers="24-33|20-22,26">class Component {}
+  public readonly id: number;
+
+  constructor(url: string) {
+    const urlWrapper = new URL(url);
+    const idParam = urlWrapper.searchParams.get("id");
+    if (!idParam) {
+      throw new Error('The id parameter is required');
+    }
+    const parsedId = +idParam;
+    if (Object.is(parsedId, NaN)) {
+      throw new Error('The id parameter is not a number');
+    }
+    this.id = parsedId;
+  }
+}
+
+describe("L3", () => {
+  let sut: Component;
+  const initTest = (url) => {
+    sut = new Component(url);
+  }
+
+  it("should parse id successfully", () => {
+    // Given
+    initTest("http://test.com?id=1");
+
+    // When
+    const result = sut.id;
+
+    // Then
+    expect(result).to.equal(1);
+  });
+});
+</code></pre></section><section data-auto-animate data-auto-animate-id="L3"><h3 class="level" data-id="code-title">L3: Test setup dependency</h3><p>Usually needed when you want to test something within the constructor
+or for L6</p></section></section><section><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
 Just creating tests is fine, but its still possible that in the end
 your tests succeed, but in production errors come up.
 Following one of these higher level test structures can further
