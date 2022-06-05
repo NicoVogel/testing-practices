@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Testing Practices</title><link rel="stylesheet" href="dist/reset.css" type="text/css"><link rel="stylesheet" href="dist/reveal.css" type="text/css"><link rel="stylesheet" href="dist/theme/black.css" type="text/css"><link rel="stylesheet" href="plugin/highlight/monokai.css" type="text/css"></head><body><div class="reveal"><div class="slides"><section><h1>Testing Practices</h1><p>by Nico Vogel</p></section><section><p>Quick disclaimer: This is only an introduction</p><p>Also, this presentation contains multiple view points
+<!DOCTYPE html><html><head><base href="/testing-practices/"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Testing Practices</title><link rel="stylesheet" href="dist/reset.css" type="text/css"><link rel="stylesheet" href="dist/reveal.css" type="text/css"><link rel="stylesheet" href="dist/theme/black.css" type="text/css"><link rel="stylesheet" href="plugin/highlight/monokai.css" type="text/css"></head><body><div class="reveal"><div class="slides"><section><h1>Testing Practices</h1><p>by Nico Vogel</p></section><section><p>Quick disclaimer: This is only an introduction</p><p>Also, this presentation contains multiple view points
 And therefore not everything can be applied at once.</p><p>That said, there are some musts in this presentation</p></section><section><h1>Agenda</h1><ul><li>Unit Testing</li><li>E2E Testing</li><li>TDD (test driven development)</li></ul><blockquote>frontend oriented, but can be applied in backend</blockquote><aside class="notes">This presentation is frontend focused, but the techniques can be applied in backend as well.
 From a topic perspective, we will cover unit testing, e2e testing and</aside></section><section><h1>Unit testing</h1><aside class="notes">Unit testing is a skill that takes practice, but is sadly
 hardly addressed in university.
@@ -124,7 +124,7 @@ describe("L1", () => {
   let service: StubbedInstance&lt;Service>;
 
   beforeEach(() => {
-    service = stubInterface&lt;Service>;
+    service = stubInterface&lt;Service>();
     sut = new Component(service);
   });
   afterEach(() => sinon.restore());
@@ -154,7 +154,7 @@ describe("L1", () => {
   let service: StubbedInstance&lt;Service>;
 
   beforeEach(() => {
-    service = stubInterface&lt;Service>;
+    service = stubInterface&lt;Service>();
     sut = new Component(service);
   });
   afterEach(() => sinon.restore());
@@ -219,7 +219,7 @@ describe("L2", () => {
   let service: StubbedInstance&lt;Service>;
 
   beforeEach(() => {
-    service = stubInterface&lt;Service>;
+    service = stubInterface&lt;Service>();
     // Override what the constructor of Service returns
     sinon.stub(ServiceModule, "Service").returns(service);
     sut = new Component(service);
@@ -254,7 +254,7 @@ describe("L2", () => {
   let service: Service;
 
   beforeEach(() => {
-    service = stubInterface&lt;Service>;
+    service = stubInterface&lt;Service>();
     // Override what the constructor of Service returns
     sinon.stub(ServiceModule, "Service").returns(service);
     sut = new Component(service);
