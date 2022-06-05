@@ -4,6 +4,10 @@ import * as sinonChai from "sinon-chai";
 import { backendCall } from "./backend-call";
 use(sinonChai);
 
+function runLater(cb: () => void) {
+  setTimeout(cb, 50);
+}
+
 describe("L5 - Async tests", () => {
   let clock: sinon.SinonFakeTimers;
   beforeEach(() => {

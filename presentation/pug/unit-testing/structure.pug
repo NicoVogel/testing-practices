@@ -8,10 +8,15 @@ section
 
   section
     h3 Test structure
-    ul
-      li Given (Arrange)
-      li When (Act)
-      li Then (Assert)
+    pre
+      code(class="language-typescript").
+        it('should do something', () => {
+          // Given (Arrange)
+
+          // When (Act)
+
+          // Then (Assert)
+        })
     blockquote.
       A behavior test tends to only include one assertions (rarely more).
 
@@ -570,10 +575,10 @@ section
       tests.forEach(({ name, data }) => {
         it(name, () => {
           // Given
-          const builder = new RouteBuilder(data.startValue);
+          const sut = new RouteBuilder(data.startValue);
 
           // When
-          const result = builder.toRoute();
+          const result = sut.toRoute();
 
           // Then
           expect(result).to.equal(data.expectedResult);
@@ -646,18 +651,18 @@ section
       tests.forEach(({ name, data }) => {
         it(name, () => {
           // Given
-          const builder = new RouteBuilder(data.startValue);
+          const sut = new RouteBuilder(data.startValue);
           data.appends.forEach((append) => {
             switch (append.type) {
               case "path":
-                return builder.appendPath(append.value);
+                return sut.appendPath(append.value);
               case "query":
-                return builder.appendQueryParameter(append.name, append.type);
+                return sut.appendQueryParameter(append.name, append.type);
             }
           });
 
           // When
-          const result = builder.toRoute();
+          const result = sut.toRoute();
 
           // Then
           expect(result).to.equal(data.expectedResult);

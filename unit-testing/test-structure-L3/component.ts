@@ -1,14 +1,16 @@
 export class Component {
-  private importantQueryParameter: number;
+  public readonly id: number;
 
-  constructor(getUrl: () => string) {
-    const url = new URL(getUrl());
-    const addParam = url.searchParams.get("add") ?? "a";
-    const addValue = +addParam;
-    this.importantQueryParameter = !Object.is(addValue, NaN) ? addValue : 0;
-  }
-
-  handleUserInput(value: number): number {
-    return value + this.importantQueryParameter;
+  constructor(url: string) {
+    const urlWrapper = new URL(url);
+    const idParam = urlWrapper.searchParams.get("id");
+    if (!idParam) {
+      throw new Error('The id parameter is required');
+    }
+    const parsedId = +idParam;
+    if (Object.is(parsedId, NaN)) {
+      throw new Error('The id parameter is not a number');
+    }
+    this.id = parsedId;
   }
 }
