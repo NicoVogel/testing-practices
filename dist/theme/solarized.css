@@ -27,6 +27,7 @@ html * {
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: uppercase;
+  --r-heading-1-text-transform: uppercase;
   --r-heading-text-shadow: none;
   --r-heading-font-weight: normal;
   --r-heading1-text-shadow: none;
@@ -90,6 +91,10 @@ html * {
   text-transform: var(--r-heading-text-transform);
   text-shadow: var(--r-heading-text-shadow);
   word-wrap: break-word;
+}
+
+.reveal h1 {
+  text-transform: var(--r-heading-1-text-transform);
 }
 
 .reveal h1 {
