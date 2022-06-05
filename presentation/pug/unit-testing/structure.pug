@@ -297,4 +297,127 @@ section
     h3(data-id="code-title" class="level") L3: #{L3}
     p.
       Usually needed when you want to test something within the constructor
-      or for L6
+      or for L4/L6
+
+  mixin L4_Base(highlight = "")
+    section(data-auto-animate data-auto-animate-id="L4")
+      h3(data-id="code-title" class="level") L4: #{L4}
+      pre(data-id="code-animation")
+        code(class='language-typescript' data-line-numbers=highlight)
+          | export function hasElement(
+          |   items: (number | string)[],
+          |   value: number | string
+          | ): boolean {
+          |   return !!items.find((x) => x === value);
+          | }
+          |
+          |
+          block
+
+  +L4_Base()
+
+  +L4_Base("8-16").
+    describe("L4", () => {
+      describe("number values", () => {
+
+      });
+      describe("string values", () => {
+
+      });
+    });
+
+  +L4_Base("10-19|22-31").
+    describe("L4", () => {
+      describe("number values", () => {
+        it("should find value", () => {
+          // Given
+          const items = [1, 2, "3", "4"];
+
+          // When
+          const result = hasElement(items, 1);
+
+          // Then
+          expect(result).to.be.true;
+        });
+      });
+      describe("string values", () => {
+        it("should find value", () => {
+          // Given
+          const items = [1, 2, "3", "4"];
+
+          // When
+          const result = hasElement(items, "3");
+
+          // Then
+          expect(result).to.be.true;
+        });
+      });
+    });
+
+  style.
+    .l4-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr
+    }
+
+  section(data-auto-animate data-auto-animate-id="L4")
+    h3(data-id="code-title" class="level") L4: #{L4}
+    .l4-container
+      ul(data-id="order")
+        li describe
+        ul
+          li beforeEach (1)
+          li before (2)
+          li it (3)
+
+  section(data-auto-animate data-auto-animate-id="L4")
+    h3(data-id="code-title" class="level") L4: #{L4}
+    .l4-container
+      ul(data-id="order")
+        li describe
+        ul
+          li beforeEach (1)
+          li before (2)
+          li it (3)
+      p(data-id="order-result") 2,1,3
+
+  section(data-auto-animate data-auto-animate-id="L4")
+    h3(data-id="code-title" class="level") L4: #{L4}
+    .l4-container
+      ul(data-id="order")
+        li describe
+        ul
+          li beforeEach (1)
+          li before (2)
+          li it (3)
+          li describe
+          ul
+            li afterEach (4)
+            li it (5)
+            li it (6)
+          li describe
+          ul
+            li beforeEach (7)
+            li it (8)
+            li it (9)
+
+  section(data-auto-animate data-auto-animate-id="L4")
+    h3(data-id="code-title" class="level") L4: #{L4}
+    .l4-container
+      ul(data-id="order")
+        li describe
+        ul
+          li beforeEach (1)
+          li before (2)
+          li it (3)
+          li describe
+          ul
+            li afterEach (4)
+            li it (5)
+            li it (6)
+          li describe
+          ul
+            li beforeEach (7)
+            li it (8)
+            li it (9)
+      p(data-id="order-result") 2, <br>(1,3), <br>(1,5,4,6,4), <br>(1,7,8,7,9)
