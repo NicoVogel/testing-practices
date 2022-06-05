@@ -16,12 +16,12 @@ section
       A behavior test tends to only include one assertions (rarely more).
 
   style.
-    ol.level, h3.level {
+    ol.level {
       counter-reset: item -1;
       list-style-type: none;
     }
 
-    ol.level li:before, h3.level::before {
+    ol.level li:before {
       content: 'L' counter(item, decimal) ': ';
       counter-increment: item;
     }
@@ -45,70 +45,195 @@ section
       li=L5
       li=L6
 
-  section(data-auto-animate data-auto-animate-id="L0")
-    h3(data-id="code-title" class="level")=L0
-    pre(data-id="code-animation")
-      code(class='language-typescript' data-line-numbers).
-        describe("L0", () => {
-          let sut: Component;
+  mixin L0_Base(highlight = "")
+    section(data-auto-animate data-auto-animate-id="L0")
+      h3(data-id="code-title" class="level") L0: #{L0}
+      pre(data-id="code-animation")
+        code(class='language-typescript' data-line-numbers=highlight)
+          | class Component {
+          |   greet() { return "hello world"; }
+          | }
+          |
+          |
+          block
 
-          beforeEach(() => sut = new Component());
-        });
+  +L0_Base()
 
-  section(data-auto-animate data-auto-animate-id="L0")
-    h3(data-id="code-title" class="level")=L0
-    pre(data-id="code-animation")
-      code(class='language-typescript' data-line-numbers).
-        describe("L0", () => {
-          let sut: Component;
+  +L0_Base("5-9").
+    describe("L0", () => {
+      let sut: Component;
 
-          beforeEach(() => sut = new Component());
+      beforeEach(() => sut = new Component());
+    });
 
-          it("should return hello world", () => {
-            const result = sut.greet();
-            expect(result).to.equal("hello world");
-          });
-        });
+  +L0_Base("10-13").
+    describe("L0", () => {
+      let sut: Component;
 
-  section(data-auto-animate data-auto-animate-id="L0")
-    h3(data-id="code-title" class="level")=L0
-    pre(data-id="code-animation")
-      code(class='language-typescript' data-line-numbers).
-        describe("L0", () => {
-          let sut: Component;
+      beforeEach(() => sut = new Component());
 
-          //- beforeEach(() => sut = new Component());
+      it("should return hello world", () => {
+        const result = sut.greet();
+        expect(result).to.equal("hello world");
+      });
+    });
 
-          it("should return hello world", () => {
-            // Given
+  +L0_Base("10-18").
+    describe("L0", () => {
+      let sut: Component;
 
-            // When
-            const result = sut.greet();
+      beforeEach(() => sut = new Component());
 
-            // Then
-            expect(result).to.equal("hello world");
-          });
-        });
+      it("should return hello world", () => {
+        // Given
 
-  section(data-auto-animate data-auto-animate-id="L1")
-  section
-    h3=L1
-    pre
-      code(class='language-typescript' data-line-numbers="3,5,8,11").
-        describe("L1", () => {
-          let sut: Component;
-          let service: Service;
-          beforeEach(() => {
-            service = stubInterface<Service>;
-            sut = new Component(service);
-          });
-          afterEach(() => sinon.restore());
+        // When
+        const result = sut.greet();
 
-          it("should process empty items", () => {
-            service.getItems.return([]);
-            const result = sut.greet();
-            expect(result).to.equal("hello world");
-          })
-        });
+        // Then
+        expect(result).to.equal("hello world");
+      });
+    });
 
+  mixin L1_Base(highlight = "")
+    section(data-auto-animate data-auto-animate-id="L1")
+      h3(data-id="code-title" class="level") L1: #{L1}
+      pre(data-id="code-animation")
+        code(class='language-typescript' data-line-numbers=highlight)
+          | class Service {
+          |   getItems() { return fetch('www.get-items.com'); }
+          | }
+          |
+          | class Component {
+          |   constructor(private service: Service) { }
+          |   getGroupedItems() {
+          |     return this.service.getItems()
+          |       .then(response => response.json())
+          |       .then(items => items.reduce(
+          |         (map, item) => {
+          |           const group = map.get(item.group) ?? [];
+          |           group.push(item);
+          |           map.set(item.group, group);
+          |           return map;
+          |         }, new Map())
+          |       );
+          |   }
+          | }
+          |
+          |
+          block
 
+  +L1_Base()
+
+  +L1_Base("7,16")
+
+  +L1_Base("21-31|23,26,29").
+    describe("L1", () => {
+      let sut: Component;
+      let service: StubbedInstance&lt;Service>;
+
+      beforeEach(() => {
+        service = stubInterface&lt;Service>;
+        sut = new Component(service);
+      });
+      afterEach(() => sinon.restore());
+    });
+
+  +L1_Base("31-40").
+    describe("L1", () => {
+      let sut: Component;
+      let service: StubbedInstance&lt;Service>;
+
+      beforeEach(() => {
+        service = stubInterface&lt;Service>;
+        sut = new Component(service);
+      });
+      afterEach(() => sinon.restore());
+
+      it("should process empty items", () => {
+        // Given
+        service.getItems.return([]);
+
+        // When
+        const result = sut.getGroupedItems();
+
+        // Then
+        expect(result).to.equal(new Map());
+      })
+    });
+
+  mixin L2_Base(highlight = "")
+    section(data-auto-animate data-auto-animate-id="L2")
+      h3(data-id="code-title" class="level") L2: #{L2}
+      pre(data-id="code-animation")
+        code(class='language-typescript' data-line-numbers=highlight)
+          | class Service {
+          |   getItems() { return fetch('www.get-items.com'); }
+          | }
+          |
+          | class Component {
+          |   private service = new Service();
+          |   // constructor(private service: Service) { }
+          |   getGroupedItems() {
+          |     return this.service.getItems()
+          |       .then(response => response.json())
+          |       .then(items => items.reduce(
+          |         (map, item) => {
+          |           const group = map.get(item.group) ?? [];
+          |           group.push(item);
+          |           map.set(item.group, group);
+          |           return map;
+          |         }, new Map())
+          |       );
+          |   }
+          | }
+          |
+          |
+          block
+
+  +L2_Base()
+
+  +L2_Base("6-7")
+
+  +L2_Base("22-35|22,30-31").
+    import * as ServiceModule from './service';
+
+    describe("L1", () => {
+      let sut: Component;
+      let service: StubbedInstance&lt;Service>;
+
+      beforeEach(() => {
+        service = stubInterface&lt;Service>;
+        // Override what the constructor of Service returns
+        sinon.stub(ServiceModule, "Service").returns(service);
+        sut = new Component(service);
+      });
+      afterEach(() => sinon.restore());
+    });
+
+  +L2_Base("36-45").
+    import * as ServiceModule from './service';
+
+    describe("L1", () => {
+      let sut: Component;
+      let service: Service;
+
+      beforeEach(() => {
+        service = stubInterface&lt;Service>;
+        // Override what the constructor of Service returns
+        sinon.stub(ServiceModule, "Service").returns(service);
+        sut = new Component(service);
+      });
+      afterEach(() => sinon.restore());
+
+      it("should process empty items", () => {
+        // Given
+        service.getItems.return([]);
+
+        // When
+        const result = sut.getGroupedItems();
+
+        // Then
+        expect(result).to.equal(new Map());
+      })
+    });
