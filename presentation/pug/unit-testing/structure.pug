@@ -16,41 +16,99 @@ section
       A behavior test tends to only include one assertions (rarely more).
 
   style.
-    ol.level, h1.level {
+    ol.level, h3.level {
       counter-reset: item -1;
       list-style-type: none;
     }
 
-    ol.level li:before, h1.level::before {
+    ol.level li:before, h3.level::before {
       content: 'L' counter(item, decimal) ': ';
       counter-increment: item;
     }
 
+  - var L0 = "Getting familiar"
+  - var L1 = "Depend on class (DI)"
+  - var L2 = "Depend on class internal"
+  - var L3 = "Test setup dependency"
+  - var L4 = "Multi level describes"
+  - var L5 = "Async tests"
+  - var L6 = "Automate test creation"
+
   section
     h3 Test file structure
     ol(class='level')
-      li Getting familiar
-      li Depend on class (DI)
-      li Depend on class internal
-      li Test setup dependency
-      li Multi level describes
-      li Async tests
-      li Automate test creation
+      li=L0
+      li=L1
+      li=L2
+      li=L3
+      li=L4
+      li=L5
+      li=L6
 
-  section
-    h3 Getting familiar
-    pre
-      code(class='language-javascript').
-        describe("L0", ()=>{
+  section(data-auto-animate data-auto-animate-id="L0")
+    h3(data-id="code-title" class="level")=L0
+    pre(data-id="code-animation")
+      code(class='language-typescript' data-line-numbers).
+        describe("L0", () => {
           let sut: Component;
 
-          beforeEach(()=> sut = new Component());
+          beforeEach(() => sut = new Component());
+        });
 
-          it("should return hello world", ()=>{
+  section(data-auto-animate data-auto-animate-id="L0")
+    h3(data-id="code-title" class="level")=L0
+    pre(data-id="code-animation")
+      code(class='language-typescript' data-line-numbers).
+        describe("L0", () => {
+          let sut: Component;
+
+          beforeEach(() => sut = new Component());
+
+          it("should return hello world", () => {
+            const result = sut.greet();
+            expect(result).to.equal("hello world");
+          });
+        });
+
+  section(data-auto-animate data-auto-animate-id="L0")
+    h3(data-id="code-title" class="level")=L0
+    pre(data-id="code-animation")
+      code(class='language-typescript' data-line-numbers).
+        describe("L0", () => {
+          let sut: Component;
+
+          //- beforeEach(() => sut = new Component());
+
+          it("should return hello world", () => {
             // Given
+
             // When
             const result = sut.greet();
+
             // Then
+            expect(result).to.equal("hello world");
+          });
+        });
+
+  section(data-auto-animate data-auto-animate-id="L1")
+  section
+    h3=L1
+    pre
+      code(class='language-typescript' data-line-numbers="3,5,8,11").
+        describe("L1", () => {
+          let sut: Component;
+          let service: Service;
+          beforeEach(() => {
+            service = stubInterface<Service>;
+            sut = new Component(service);
+          });
+          afterEach(() => sinon.restore());
+
+          it("should process empty items", () => {
+            service.getItems.return([]);
+            const result = sut.greet();
             expect(result).to.equal("hello world");
           })
         });
+
+
