@@ -1,5 +1,4 @@
 // Exposes theme's variables for easy re-use in CSS for plugin authors
-
 :root {
   --r-background-color: #{$backgroundColor};
   --r-main-font: #{$mainFont};
@@ -12,6 +11,11 @@
   --r-heading-line-height: #{$headingLineHeight};
   --r-heading-letter-spacing: #{$headingLetterSpacing};
   --r-heading-text-transform: #{$headingTextTransform};
+  --r-heading-1-text-transform: #{if(
+      global-variable-exists("headingText1Transform"),
+      $headingText1Transform,
+      $headingTextTransform
+    )};
   --r-heading-text-shadow: #{$headingTextShadow};
   --r-heading-font-weight: #{$headingFontWeight};
   --r-heading1-text-shadow: #{$heading1TextShadow};
@@ -21,7 +25,7 @@
   --r-heading4-size: #{$heading4Size};
   --r-code-font: #{$codeFont};
   --r-link-color: #{$linkColor};
-  --r-link-color-dark: #{darken($linkColor , 15% )};
+  --r-link-color-dark: #{darken($linkColor, 15%)};
   --r-link-color-hover: #{$linkColorHover};
   --r-selection-background-color: #{$selectionBackgroundColor};
   --r-selection-color: #{$selectionColor};

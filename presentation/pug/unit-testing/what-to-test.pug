@@ -1,6 +1,6 @@
 section
   section
-    h1 What should you actually test?
+    h2 What should you actually test?
     ul
       li class's?
       li functions?
@@ -15,7 +15,7 @@ section
 
   section
     p What do you actually test?
-    h1 Behavior
+    h3 Behavior
     aside(class='notes').
       This is a clear must do and it should not be open to debate.
 
@@ -23,7 +23,7 @@ section
     img(class='r-stretch' src='/img/confused-meme.jpg' style='background: white')
 
   section
-    h1 How to test behavior?
+    h3 How to test behavior?
     ul
       li ensure that the system is in the correct state
       li execute some action
@@ -32,7 +32,7 @@ section
       Most of the time its calling a function or an objects method.
 
   section
-    h1 Common mistakes to avoid
+    h3 Common mistakes to avoid
     ul
       li testing every function of a class
       li testing every attribute of a class
@@ -57,7 +57,7 @@ section
       partial behavior.
 
   section
-    h1 Don't test implementation details
+    h3 Don't test implementation details
     p.
       The sub classes don't need tests.
       If you want to test them anyways, then mark the tests as
@@ -67,7 +67,7 @@ section
       expect that you need to remove the tests when the code is refactored.
 
   section
-    h1 What are the benefits of this?
+    h3 What are the benefits of this?
     p.
       Tests only break if you change the behavior of the system
       and not if you refactor code
