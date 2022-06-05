@@ -1,1 +1,6 @@
-
+highlight/highlight*.js
+markdown/markdown*.js
+notes/notes*.js
+plantuml/plantuml*.js
+search/search*.js
+zoom/zoom*.js
