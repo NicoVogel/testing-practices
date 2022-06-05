@@ -123,9 +123,7 @@ section
           |
           block
 
-  +L1_Base()
-
-  +L1_Base("7,16")
+  +L1_Base("|7,16")
 
   +L1_Base("21-31|23,26,29").
     describe("L1", () => {
@@ -191,14 +189,12 @@ section
           |
           block
 
-  +L2_Base()
-
-  +L2_Base("6-7")
+  +L2_Base("|6-7")
 
   +L2_Base("22-35|22,30-31").
     import * as ServiceModule from './service';
 
-    describe("L1", () => {
+    describe("L2", () => {
       let sut: Component;
       let service: StubbedInstance&lt;Service>;
 
@@ -214,7 +210,7 @@ section
   +L2_Base("36-45").
     import * as ServiceModule from './service';
 
-    describe("L1", () => {
+    describe("L2", () => {
       let sut: Component;
       let service: Service;
 
@@ -237,3 +233,68 @@ section
         expect(result).to.equal(new Map());
       })
     });
+
+  section(data-auto-animate data-auto-animate-id="L2")
+    h3(data-id="code-title" class="level") L2: #{L2}
+    p Try to avoid this style as it makes tests needlessly complex
+    p Use Dependency Injection instead to keep tests clean
+
+  mixin L3_Base(highlight = "")
+    section(data-auto-animate data-auto-animate-id="L3")
+      h3(data-id="code-title" class="level") L3: #{L3}
+      pre(data-id="code-animation")
+        code(class='language-typescript' data-line-numbers=highlight)
+          | class Component {}
+          |   public readonly id: number;
+          |
+          |   constructor(url: string) {
+          |     const urlWrapper = new URL(url);
+          |     const idParam = urlWrapper.searchParams.get("id");
+          |     if (!idParam) {
+          |       throw new Error('The id parameter is required');
+          |     }
+          |     const parsedId = +idParam;
+          |     if (Object.is(parsedId, NaN)) {
+          |       throw new Error('The id parameter is not a number');
+          |     }
+          |     this.id = parsedId;
+          |   }
+          | }
+          |
+          |
+          block
+
+  +L3_Base("|8,12")
+
+  +L3_Base("18-23").
+    describe("L3", () => {
+      let sut: Component;
+      const initTest = (url) => {
+        sut = new Component(url);
+      }
+    });
+
+  +L3_Base("24-33|20-22,26").
+    describe("L3", () => {
+      let sut: Component;
+      const initTest = (url) => {
+        sut = new Component(url);
+      }
+
+      it("should parse id successfully", () => {
+        // Given
+        initTest("http://test.com?id=1");
+
+        // When
+        const result = sut.id;
+
+        // Then
+        expect(result).to.equal(1);
+      });
+    });
+
+  section(data-auto-animate data-auto-animate-id="L3")
+    h3(data-id="code-title" class="level") L3: #{L3}
+    p.
+      Usually needed when you want to test something within the constructor
+      or for L6
