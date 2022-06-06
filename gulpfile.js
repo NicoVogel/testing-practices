@@ -17,6 +17,7 @@ const minify = require('gulp-clean-css')
 const connect = require('gulp-connect')
 const autoprefixer = require('gulp-autoprefixer')
 const pug = require('gulp-pug-3');
+const run = require('gulp-run-command').default;
 
 const root = yargs.argv.root || 'presentation'
 const port = yargs.argv.port || 8000
@@ -249,3 +250,5 @@ gulp.task('serve', () => {
   ], gulp.series('css-core', 'reload'))
 
 })
+
+gulp.task('png-to-jpg', run('mogrify -format jpg -background white -alpha remove -alpha off *.png', { cwd: 'presentation/img' }))

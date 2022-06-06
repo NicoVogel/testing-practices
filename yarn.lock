@@ -2492,7 +2492,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-runtime@npm:^6.26.0":
+"babel-plugin-transform-runtime@npm:6.15.0":
+  version: 6.15.0
+  resolution: "babel-plugin-transform-runtime@npm:6.15.0"
+  dependencies:
+    babel-runtime: ^6.9.0
+  checksum: a8d1f2626dee8a28ff42a13d89f1fbca6c38602fd754387940cf35963ff259d7b2802d349acae3574f9fb8cc2b65ce5adacd1c8b61b09b8070d9e107ffa06d9e
+  languageName: node
+  linkType: hard
+
+"babel-runtime@npm:^6.26.0, babel-runtime@npm:^6.9.0":
   version: 6.26.0
   resolution: "babel-runtime@npm:6.26.0"
   dependencies:
@@ -3441,6 +3450,16 @@ __metadata:
   version: 1.0.3
   resolution: "core-util-is@npm:1.0.3"
   checksum: 9de8597363a8e9b9952491ebe18167e3b36e7707569eed0ebf14f8bba773611376466ae34575bca8cfe3c767890c859c74056084738f09d4e4a6f902b2ad7d99
+  languageName: node
+  linkType: hard
+
+"cross-spawn@npm:4.0.0":
+  version: 4.0.0
+  resolution: "cross-spawn@npm:4.0.0"
+  dependencies:
+    lru-cache: ^4.0.1
+    which: ^1.2.9
+  checksum: a1767a0d8afaa3b09233cca5c652b47a890de8e88449e67968fd0dd3eaca3c2159f9efa4db60b49c2206d2aafffc8a59e5d625e9b48c115fa842ae377fa4a8fa
   languageName: node
   linkType: hard
 
@@ -5219,6 +5238,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gulp-run-command@npm:^0.0.10":
+  version: 0.0.10
+  resolution: "gulp-run-command@npm:0.0.10"
+  dependencies:
+    babel-plugin-transform-runtime: 6.15.0
+    cross-spawn: 4.0.0
+    spawn-args: 0.2.0
+    timeout-as-promise: ^1.0.0
+  checksum: 2c302822d9ab417e1bca72e53eb82238aa10131d48dbcf5ffd2a6b3fd1a26bf5f493aca21131ab899e2453df80034eee42391c972369d51242adbdf78edbcec3
+  languageName: node
+  linkType: hard
+
 "gulp-zip@npm:^4.2.0":
   version: 4.2.0
   resolution: "gulp-zip@npm:4.2.0"
@@ -6511,6 +6542,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^4.0.1":
+  version: 4.1.5
+  resolution: "lru-cache@npm:4.1.5"
+  dependencies:
+    pseudomap: ^1.0.2
+    yallist: ^2.1.2
+  checksum: 4bb4b58a36cd7dc4dcec74cbe6a8f766a38b7426f1ff59d4cf7d82a2aa9b9565cd1cb98f6ff60ce5cd174524868d7bc9b7b1c294371851356066ca9ac4cf135a
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^6.0.0":
   version: 6.0.0
   resolution: "lru-cache@npm:6.0.0"
@@ -7648,6 +7689,13 @@ __metadata:
   version: 1.0.0
   resolution: "proxy-from-env@npm:1.0.0"
   checksum: 292e28d1de0c315958d71d8315eb546dd3cd8c8cbc2dab7c54eeb9f5c17f421771964ad0b5e1f77011bab2305bdae42e1757ce33bdb1ccc3e87732322a8efcf1
+  languageName: node
+  linkType: hard
+
+"pseudomap@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "pseudomap@npm:1.0.2"
+  checksum: 856c0aae0ff2ad60881168334448e898ad7a0e45fe7386d114b150084254c01e200c957cf378378025df4e052c7890c5bd933939b0e0d2ecfcc1dc2f0b2991f5
   languageName: node
   linkType: hard
 
@@ -8939,6 +8987,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"spawn-args@npm:0.2.0":
+  version: 0.2.0
+  resolution: "spawn-args@npm:0.2.0"
+  checksum: bfae0a52166bf4b0b18388220532aa48c436413e970f8c404ca249e541ad63b5e5371f54f1db9b0fd57517ea333a1356d71209783a7686f08c883338e75ae0ac
+  languageName: node
+  linkType: hard
+
 "spdx-correct@npm:^3.0.0":
   version: 3.1.1
   resolution: "spdx-correct@npm:3.1.1"
@@ -9307,6 +9362,7 @@ __metadata:
     gulp-eslint: ^6.0.0
     gulp-header: ^2.0.9
     gulp-pug-3: ^1.2.2
+    gulp-run-command: ^0.0.10
     gulp-zip: ^4.2.0
     highlight.js: ^10.0.3
     marked: ^4.0.12
@@ -9387,6 +9443,13 @@ __metadata:
   version: 1.1.0
   resolution: "time-stamp@npm:1.1.0"
   checksum: 4c46e9739dab997fa8ba787c644cb2b9ea9867eb281acbbb8ba23c4f5edcbe8cc16f0aa5b7981a4c96df76b99dd1f54b0895865c15f3c0e49d1edd8c208717fd
+  languageName: node
+  linkType: hard
+
+"timeout-as-promise@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "timeout-as-promise@npm:1.0.0"
+  checksum: 5b9dd337e3534b3190b5bbe5e3ebeb7d68f07271be4af7656079074f44c27f9d10e30a09510efb176d8c307242b5962bc3e2724ade449872e6830e2d43f3c57b
   languageName: node
   linkType: hard
 
@@ -10213,6 +10276,13 @@ __metadata:
   version: 4.0.3
   resolution: "y18n@npm:4.0.3"
   checksum: 014dfcd9b5f4105c3bb397c1c8c6429a9df004aa560964fb36732bfb999bfe83d45ae40aeda5b55d21b1ee53d8291580a32a756a443e064317953f08025b1aa4
+  languageName: node
+  linkType: hard
+
+"yallist@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "yallist@npm:2.1.2"
+  checksum: 9ba99409209f485b6fcb970330908a6d41fa1c933f75e08250316cce19383179a6b70a7e0721b89672ebb6199cc377bf3e432f55100da6a7d6e11902b0a642cb
   languageName: node
   linkType: hard
 
