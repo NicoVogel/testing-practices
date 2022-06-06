@@ -1,4 +1,4 @@
-section
+section(id="unit-testing")
   h1 Unit testing
   aside(class='notes').
     Unit testing is a skill that takes practice, but is sadly
@@ -17,6 +17,21 @@ include ./what-to-test.pug
 include ./structure.pug
 
 section
+  section
+    h2 Problem with Mocks
+    img(src="img/solitary-test-have-gaps.png")
+    aside(class='notes').
+      We often test components in isolation by mocking other components out,
+      but there is a potential for gaps in the implementation
+      To address this issue, there are two patterns that help to mitigate the issue
+
+  section
+    h2 Problem with Mocks
+    img(src="img/integration-tests-are-duplicative-and-slow.png")
+    aside(class='notes').
+      To fix that we create integration tests that are slow and difficult to maintain as well as duplicate effort.
+
+section(id="higher-level-test-structures")
   h2 Higher level test structures
   p There are two options I know of:
   ul
@@ -29,7 +44,11 @@ section
     Following one of these higher level test structures can further
     harden your testing.
 
+    I have only used the "Contract tests" up until now and only recently learned
+    of "Sociable tests" and am really interested in the idea.
+
     You don't need to use any of these approaches and they can even be
     considered "ugly" by some people
 
 include ./contract-tests.pug
+include ./sociable-tests.pug

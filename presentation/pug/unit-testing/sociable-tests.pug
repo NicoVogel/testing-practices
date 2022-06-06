@@ -1,0 +1,41 @@
+section
+  section
+    h2 Social tests
+    img(src="img/overlapping-socialble-tests.png")
+    p Part of checking if A works as it should be is to test that A calls B correctly
+    p This mitigates the need for integration tests
+    aside(class="notes").
+      Source: https://www.youtube.com/watch?v=jwbKSiqG0DI
+
+  section
+    h3 Problem with actually calling everything
+    p Eventually you will hit infrastructure you don't want to run
+    p solution -> nullable infrastructure
+
+  section
+    h3 Nullable infrastructure
+    ul
+      li Real production code that can be disabled
+      li Identical semantics -> same code
+      li Tracks state when needed
+      li Implemented with embedded stubs
+
+  section
+    h3 Nullable infrastructure
+    p This means writing test code which is within your production code
+    aside(class="notes").
+      - we have test code in prod code
+      + we no longer need Mocks
+      + we only have to do it once, while mocks need to be configured multiple times
+      + you don't need integration tests
+      There is no silver bullet and its a choice to be made
+
+  section
+    h3 Sources
+    ul
+      li
+        a(href="http://www.jamesshore.com/v2/blog/2018/testing-without-mocks") Blog: Testing without mocks
+      li
+        a(href="https://www.youtube.com/watch?v=jwbKSiqG0DI") YouTube: Testing without mocks
+      li
+        a(href="https://www.youtube.com/watch?v=3CBamvF9A3Q") YouTube: Microservices Without Mocks Part 1 - The Serve

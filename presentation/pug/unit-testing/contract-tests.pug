@@ -13,6 +13,13 @@ section
 
       -> img source: https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
 
+  section
+    h2 Contract tests
+    img(class='r-stretch' src='img/contract-tests.png' style='background: white')
+    aside(class='notes').
+      The tests for the service need to verify the contract.
+      Otherwise the gap between the implementation is not filled and there is possible misalignment
+
   //- section
   //-   h1 What are contracts?
   //-   p A contract in computer science has:
@@ -20,17 +27,6 @@ section
   //-     li pre-condition -> fulfilled before an action
   //-     li post-condition -> fulfilled after an action
   //-     li invariants -> always true
-
-  section
-    h3 Example 1
-    pre
-      code(class="language-plantuml r-stretch").
-        @startuml
-        Alice -> Bob: test
-        Bob --> Alice: Authentication Response
-        Alice -> Bob: Another authentication Request
-        Bob --> Alice: Another authentication Response
-        @enduml
 
   section
     h3 How to apply contracts testing?

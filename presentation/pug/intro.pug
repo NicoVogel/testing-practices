@@ -1,23 +1,31 @@
 section
   h1 Testing Practices
   p by Nico Vogel
+  aside(class='notes').
+    Before we begin, this presentation contains my knowledge of testing
+    and is by all means no silver bullet.
+    I just hope to give you a new perspective on some testing topics.
+    Just take the parts that are relevant for you.
 
-section
-  p Quick disclaimer: This is only an introduction
-  p.
-    Also, this presentation contains multiple view points
-    And therefore not everything can be applied at once.
-  p That said, there are some musts in this presentation
-
-
+    That being said, lets look at the agenda.
 
 section
   h1 Agenda
   ul
-    li Unit Testing
-    li E2E Testing
-    li TDD (test driven development)
+    li
+      a(href="#/unit-testing") Unit Testing
+      ul
+        li
+          a(href="#/what-should-you-actually-test") What should you actually test?
+        li
+          a(href="#/how-to-structure-tests") How should you structure your tests?
+        li
+          a(href="#/higher-level-test-structures") Higher level test structures
+    li
+      a(href="#/e2e-testing") E2E Testing
+    li
+      a(href="#/tdd") TDD (test driven development)
   blockquote frontend oriented, but can be applied in backend
   aside(class='notes').
     This presentation is frontend focused, but the techniques can be applied in backend as well.
-    From a topic perspective, we will cover unit testing, e2e testing and
+    The focus point of this presentation is on unit tests
