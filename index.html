@@ -1,11 +1,16 @@
-<!DOCTYPE html><html><head><base href="/testing-practices/"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Testing Practices</title><link rel="stylesheet" href="dist/reset.css" type="text/css"><link rel="stylesheet" href="dist/reveal.css" type="text/css"><link rel="stylesheet" href="dist/theme/black.css" type="text/css"><link rel="stylesheet" href="plugin/highlight/monokai.css" type="text/css"></head><body><div class="reveal"><div class="slides"><section><h1>Testing Practices</h1><p>by Nico Vogel</p></section><section><p>Quick disclaimer: This is only an introduction</p><p>Also, this presentation contains multiple view points
-And therefore not everything can be applied at once.</p><p>That said, there are some musts in this presentation</p></section><section><h1>Agenda</h1><ul><li>Unit Testing</li><li>E2E Testing</li><li>TDD (test driven development)</li></ul><blockquote>frontend oriented, but can be applied in backend</blockquote><aside class="notes">This presentation is frontend focused, but the techniques can be applied in backend as well.
-From a topic perspective, we will cover unit testing, e2e testing and</aside></section><section><h1>Unit testing</h1><aside class="notes">Unit testing is a skill that takes practice, but is sadly
+<!DOCTYPE html><html><head><base href="/testing-practices/"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Testing Practices</title><link rel="stylesheet" href="dist/reset.css" type="text/css"><link rel="stylesheet" href="dist/reveal.css" type="text/css"><link rel="stylesheet" href="dist/theme/black.css" type="text/css"><link rel="stylesheet" href="plugin/highlight/monokai.css" type="text/css"></head><body><div class="reveal"><div class="slides"><section><h1>Testing Practices</h1><p>by Nico Vogel</p><aside class="notes">Before we begin, this presentation contains my knowledge of testing
+and is by all means no silver bullet.
+I just hope to give you a new perspective on some testing topics.
+Just take the parts that are relevant for you.
+
+That being said, lets look at the agenda.
+</aside></section><section><h1>Agenda</h1><ul><li><a href="#/unit-testing">Unit Testing</a><ul><li><a href="#/what-should-you-actually-test">What should you actually test?</a></li><li><a href="#/how-to-structure-tests">How should you structure your tests?</a></li><li><a href="#/higher-level-test-structures">Higher level test structures</a></li></ul></li><li><a href="#/e2e-testing">E2E Testing</a></li><li><a href="#/tdd">TDD (test driven development)</a></li></ul><blockquote>frontend oriented, but can be applied in backend</blockquote><aside class="notes">This presentation is frontend focused, but the techniques can be applied in backend as well.
+The focus point of this presentation is on unit tests</aside></section><section id="unit-testing"><h1>Unit testing</h1><aside class="notes">Unit testing is a skill that takes practice, but is sadly
 hardly addressed in university.
 </aside></section><section><h2>What is unit testing?</h2><p>A practice to test parts of your code quickly.</p><aside class="notes">Even tough this statement might seem straight forward at first
 glance, there are multiple nuances to this skill and I will
 outline some of them.
-</aside></section><section><section><h2>What should you actually test?</h2><ul><li>class's?</li><li>functions?</li><li>attributes?</li><li>services?</li><li>components?</li><li>...?</li></ul><aside class="notes">The fist thing to understand is what are we actually testing in unit tests
+</aside></section><section><section id="what-should-you-actually-test"><h2>What should you actually test?</h2><ul><li>class's?</li><li>functions?</li><li>attributes?</li><li>services?</li><li>components?</li><li>...?</li></ul><aside class="notes">The fist thing to understand is what are we actually testing in unit tests
 What do you think, which of these do we test?
 As always, the answer is: (next slide)
 </aside></section><section><p>What do you actually test?</p><h3>Behavior</h3><aside class="notes">This is a clear must do and it should not be open to debate.
@@ -23,7 +28,13 @@ If you want to test them anyways, then mark the tests as
 "throw away" or something similar.</p><aside class="notes">Whenever implementation details a^^re tested, then you need to
 expect that you need to remove the tests when the code is refactored.
 </aside></section><section><h3>What are the benefits of this?</h3><p>Tests only break if you change the behavior of the system
-and not if you refactor code</p></section></section><section><section><h2>How should you structure your tests?</h2><ul><li>A test</li><li>A test file</li></ul></section><section><h3>Test structure</h3><ul><li>Given (Arrange)</li><li>When (Act)</li><li>Then (Assert)</li></ul><blockquote>A behavior test tends to only include one assertions (rarely more).
+and not if you refactor code</p></section></section><section><section id="how-to-structure-tests"><h2>How should you structure your tests?</h2><ul><li>A test</li><li>A test file</li></ul></section><section><h3>Test structure</h3><pre><code class="language-typescript">it('should do something', () => {
+  // Given (Arrange)
+
+  // When (Act)
+
+  // Then (Assert)
+})</code></pre><blockquote>A behavior test tends to only include one assertions (rarely more).
 </blockquote></section><style>ol.level {
   counter-reset: item -1;
   list-style-type: none;
@@ -533,10 +544,10 @@ describe("L6", () => {
   tests.forEach(({ name, data }) => {
     it(name, () => {
       // Given
-      const builder = new RouteBuilder(data.startValue);
+      const sut = new RouteBuilder(data.startValue);
 
       // When
-      const result = builder.toRoute();
+      const result = sut.toRoute();
 
       // Then
       expect(result).to.equal(data.expectedResult);
@@ -607,28 +618,35 @@ describe("L6", () => {
   tests.forEach(({ name, data }) => {
     it(name, () => {
       // Given
-      const builder = new RouteBuilder(data.startValue);
+      const sut = new RouteBuilder(data.startValue);
       data.appends.forEach((append) => {
         switch (append.type) {
           case "path":
-            return builder.appendPath(append.value);
+            return sut.appendPath(append.value);
           case "query":
-            return builder.appendQueryParameter(append.name, append.type);
+            return sut.appendQueryParameter(append.name, append.type);
         }
       });
 
       // When
-      const result = builder.toRoute();
+      const result = sut.toRoute();
 
       // Then
       expect(result).to.equal(data.expectedResult);
     });
   });
-});</code></pre></section></section><section><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
+});</code></pre></section></section><section><section><h2>Problem with Mocks</h2><img src="img/solitary-test-have-gaps.png"><aside class="notes">We often test components in isolation by mocking other components out,
+but there is a potential for gaps in the implementation
+To address this issue, there are two patterns that help to mitigate the issue
+</aside></section><section><h2>Problem with Mocks</h2><img src="img/integration-tests-are-duplicative-and-slow.png"><aside class="notes">To fix that we create integration tests that are slow and difficult to maintain as well as duplicate effort.
+</aside></section></section><section id="higher-level-test-structures"><h2>Higher level test structures</h2><p>There are two options I know of:</p><ul><li>Contract tests</li><li>Sociable tests</li></ul><aside class="notes">Or you could also call it mindsets.
 Just creating tests is fine, but its still possible that in the end
 your tests succeed, but in production errors come up.
 Following one of these higher level test structures can further
 harden your testing.
+
+I have only used the "Contract tests" up until now and only recently learned
+of "Sociable tests" and am really interested in the idea.
 
 You don't need to use any of these approaches and they can even be
 considered "ugly" by some people
@@ -640,15 +658,17 @@ this also applies to our tests.
 At least the left part is usually considered when creating tests
 
 -> img source: https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/
-</aside></section><section><h3>Example 1</h3><pre><code class="language-plantuml r-stretch">@startuml
-Alice -> Bob: test
-Bob --> Alice: Authentication Response
-Alice -> Bob: Another authentication Request
-Bob --> Alice: Another authentication Response
-@enduml
-</code></pre></section><section><h3>How to apply contracts testing?</h3><p>When
+</aside></section><section><h2>Contract tests</h2><img class="r-stretch" src="img/contract-tests.png" style="background: white"><aside class="notes">The tests for the service need to verify the contract.
+Otherwise the gap between the implementation is not filled and there is possible misalignment
+</aside></section><section><h3>How to apply contracts testing?</h3><p>When
 
-</p></section><section><h3></h3></section></section><section><section><h1>E2E testing</h1><p>End 2 End testing</p></section><section><h1>What is E2E testing?</h1></section><section><h1>How is it different from unit testing?</h1></section></section><section><section><h1>TDD</h1><p>Test Driven Development</p></section><section><h1>What is TDD?</h1></section></section></div></div><script src="dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/markdown/markdown.js"></script><script src="plugin/highlight/highlight.js"></script><script>Reveal.initialize( {
+</p></section><section><h3></h3></section></section><section><section><h2>Social tests</h2><img src="img/overlapping-socialble-tests.png"><p>Part of checking if A works as it should be is to test that A calls B correctly</p><p>This mitigates the need for integration tests</p><aside class="notes">Source: https://www.youtube.com/watch?v=jwbKSiqG0DI
+</aside></section><section><h3>Problem with actually calling everything</h3><p>Eventually you will hit infrastructure you don't want to run</p><p>solution -> nullable infrastructure</p></section><section><h3>Nullable infrastructure</h3><ul><li>Real production code that can be disabled</li><li>Identical semantics -> same code</li><li>Tracks state when needed</li><li>Implemented with embedded stubs</li></ul></section><section><h3>Nullable infrastructure</h3><p>This means writing test code which is within your production code</p><aside class="notes">- we have test code in prod code
++ we no longer need Mocks
++ we only have to do it once, while mocks need to be configured multiple times
++ you don't need integration tests
+There is no silver bullet and its a choice to be made
+</aside></section><section><h3>Sources</h3><ul><li><a href="http://www.jamesshore.com/v2/blog/2018/testing-without-mocks">Blog: Testing without mocks</a></li><li><a href="https://www.youtube.com/watch?v=jwbKSiqG0DI">YouTube: Testing without mocks</a></li><li><a href="https://www.youtube.com/watch?v=3CBamvF9A3Q">YouTube: Microservices Without Mocks Part 1 - The Serve</a></li></ul></section></section><section><section id="e2e-testing"><h1>E2E testing</h1><p>End 2 End testing</p></section><section><h1>What is E2E testing?</h1></section><section><h1>How is it different from unit testing?</h1></section></section><section><section id="tdd"><h1>TDD</h1><p>Test Driven Development</p></section><section><h1>What is TDD?</h1></section></section></div></div><script src="dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/markdown/markdown.js"></script><script src="plugin/highlight/highlight.js"></script><script>Reveal.initialize( {
   hash: true,
   plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 } );</script></body></html>
