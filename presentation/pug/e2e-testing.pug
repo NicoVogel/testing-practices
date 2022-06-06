@@ -1,10 +1,59 @@
 section
   section(id="e2e-testing")
     h1 E2E testing
-    p End 2 End testing
 
   section
-    h1 What is E2E testing?
+    h2 What is the difference to Unit Tests?
+    p We actually run infrastructure and they are therefore slow
 
   section
-    h1 How is it different from unit testing?
+    h2 Some considerations for E2E tests
+    ul
+      li Language agnostic
+      li use <strong>data-test</strong> attributes
+      li use page objects
+    aside(class="notes").
+      Tests should not break, just because you make a spelling correction
+      or switch the language.
+      Using data-test or any other data-* attribute decouples your
+      test from the actual implementation.
+      Using a page object makes your tests more readable
+
+  section(data-auto-animate)
+    h2 Page objects
+    p Good old OOP
+    pre
+      code(class="language-typescript").
+        export class ProfilePO {
+          open() {
+            this.menu.clickOnProfile();
+            cy.get('[data-test="profile.name"]').should('be.visible');
+          }
+          changePassword(password: string){/** ... */}
+          // ...
+        }
+
+  section(data-auto-animate)
+    h2 Page objects
+    p JS way
+    pre
+      code(class="language-typescript").
+        export const profilePo = {
+          open(){
+            menu.clickOnProfile();
+            cy.get('[data-test="profile.name"]').should('be.visible');
+          }
+          changePassword(password: string){/** ... */}
+          // ...
+        }
+
+  section(data-auto-animate)
+    h2 Page objects
+    p Actions should reflect user behavior
+    p Actions should contain validations as well
+
+  section
+    h2 E2E test infrastructure
+    p Strive for independent infrastructure that is started just for the E2E tests
+    aside(class="notes").
+      This will save you many headaches when it comes to conflicts between running processes
