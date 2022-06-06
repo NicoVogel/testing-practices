@@ -10,11 +10,11 @@ hardly addressed in university.
 </aside></section><section><h2>What is unit testing?</h2><p>A practice to test parts of your code quickly.</p><aside class="notes">Even tough this statement might seem straight forward at first
 glance, there are multiple nuances to this skill and I will
 outline some of them.
-</aside></section><section><section id="what-should-you-actually-test"><h2>What should you actually test?</h2><ul><li>class's?</li><li>functions?</li><li>attributes?</li><li>services?</li><li>components?</li><li>...?</li></ul><aside class="notes">The fist thing to understand is what are we actually testing in unit tests
+</aside></section><section><section id="what-should-you-actually-test"><h2>What should you actually test?</h2><ul><li>classes?</li><li>functions?</li><li>attributes?</li><li>services?</li><li>components?</li><li>...?</li></ul><aside class="notes">The fist thing to understand is what are we actually testing in unit tests
 What do you think, which of these do we test?
 As always, the answer is: (next slide)
 </aside></section><section><p>What do you actually test?</p><h3>Behavior</h3><aside class="notes">This is a clear must do and it should not be open to debate.
-</aside></section><section><img class="r-stretch" src="img/confused-meme.jpg" style="background: white"></section><section><h3>How to test behavior?</h3><ul><li>ensure that the system is in the correct state</li><li>execute some action</li><li>expect that the system changed according to the behavior</li></ul><p>Most of the time its calling a function or an objects method.
+</aside></section><section><img class="r-stretch" src="img/confused-meme.jpg" style="background: white"></section><section><h3>How to test behavior?</h3><ul><li>ensure that the system is in the correct state</li><li>execute some action</li><li>expect that the system changed according to the behavior</li></ul><p>Most of the time it's calling a function or an object's method.
 </p></section><section><h3>Common mistakes to avoid</h3><ul><li>testing every function of a class</li><li>testing every attribute of a class</li><li>making assertions that some internal stuff happens in a class</li></ul><aside class="notes">Lets look at an example.
 </aside></section><section><p>Imagine you work on a feature and your class gets bigger and bigger.
 At some point you decide this is no longer understandable and you split
@@ -34,7 +34,7 @@ and not if you refactor code</p></section></section><section><section id="how-to
   // When (Act)
 
   // Then (Assert)
-})</code></pre><blockquote>A behavior test tends to only include one assertions (rarely more).
+})</code></pre><blockquote>A behavior test tends to only include one assertion (rarely more).
 </blockquote></section><style>ol.level {
   counter-reset: item -1;
   list-style-type: none;
@@ -172,7 +172,7 @@ describe("L1", () => {
 
   it("should process empty items", async () => {
     // Given
-    service.getItems.resoles([]);
+    service.getItems.resolves([]);
 
     // When
     const result = await sut.getGroupedItems();
