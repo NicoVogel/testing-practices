@@ -52,3 +52,32 @@ section(id="higher-level-test-structures")
 
 include ./contract-tests.pug
 include ./sociable-tests.pug
+
+style.
+  .higher-structure-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .higher-structure-container ul {
+    list-style-type: none;
+  }
+  .higher-structure-container li:not(:last-child) {
+    margin-bottom: 1.5rem
+  }
+
+section
+  h2 Higher level test structures
+  .higher-structure-container
+    h4 Contract tests
+    h4 Sociable tests
+    ul
+      li ✅ little extension to what we already know
+      li ❌ requires duplicate code
+      li ❌ integration tests are needed
+    ul
+      li ❌ is a bit disruptive
+      li ✅ No mocks needed
+      li ✅ No integration tests needed
+  aside(class="notes").
+    Writing nullable infrastructure tends to be less effort then maintaining mocks.
+    They only need to be written once.
