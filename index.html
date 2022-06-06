@@ -679,7 +679,28 @@ There is no silver bullet and its a choice to be made
   margin-bottom: 1.5rem
 }
 </style><section><h2>Higher level test structures</h2><div class="higher-structure-container"><h4>Contract tests</h4><h4>Sociable tests</h4><ul><li>✅ little extension to what we already know</li><li>❌ requires duplicate code</li><li>❌ integration tests are needed</li></ul><ul><li>❌ is a bit disruptive</li><li>✅ No mocks needed</li><li>✅ No integration tests needed</li></ul></div><aside class="notes">Writing nullable infrastructure tends to be less effort then maintaining mocks.
-They only need to be written once.</aside></section><section><section id="e2e-testing"><h1>E2E testing</h1><p>End 2 End testing</p></section><section><h1>What is E2E testing?</h1></section><section><h1>How is it different from unit testing?</h1></section></section><section><section id="tdd"><h1>TDD</h1><p>Test Driven Development</p></section><section><h1>What is TDD?</h1></section></section></div></div><script src="dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/markdown/markdown.js"></script><script src="plugin/highlight/highlight.js"></script><script>Reveal.initialize( {
+They only need to be written once.</aside></section><section><section id="e2e-testing"><h1>E2E testing</h1></section><section><h2>What is the difference to Unit Tests?</h2><p>We actually run infrastructure and they are therefore slow</p></section><section><h2>Some considerations for E2E tests</h2><ul><li>Language agnostic</li><li>use <strong>data-test</strong> attributes</li><li>use page objects</li></ul><aside class="notes">Tests should not break, just because you make a spelling correction
+or switch the language.
+Using data-test or any other data-* attribute decouples your
+test from the actual implementation.
+Using a page object makes your tests more readable
+</aside></section><section data-auto-animate><h2>Page objects</h2><p>Good old OOP</p><pre><code class="language-typescript">export class ProfilePO {
+  open() {
+    this.menu.clickOnProfile();
+    cy.get('[data-test="profile.name"]').should('be.visible');
+  }
+  changePassword(password: string){/** ... */}
+  // ...
+}
+</code></pre></section><section data-auto-animate><h2>Page objects</h2><p>JS way</p><pre><code class="language-typescript">export const profilePo = {
+  open(){
+    menu.clickOnProfile();
+    cy.get('[data-test="profile.name"]').should('be.visible');
+  }
+  changePassword(password: string){/** ... */}
+  // ...
+}
+</code></pre></section><section data-auto-animate><h2>Page objects</h2><p>Actions should reflect user behavior</p><p>Actions should contain validations as well</p></section><section><h2>E2E test infrastructure</h2><p>Strive for independent infrastructure that is started just for the E2E tests</p><aside class="notes">This will save you many headaches when it comes to conflicts between running processes</aside></section></section><section><section id="tdd"><h1>TDD</h1><p>Test Driven Development</p></section><section><h1>What is TDD?</h1></section></section></div></div><script src="dist/reveal.js"></script><script src="plugin/notes/notes.js"></script><script src="plugin/markdown/markdown.js"></script><script src="plugin/highlight/highlight.js"></script><script>Reveal.initialize( {
   hash: true,
   plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
 } );</script></body></html>
