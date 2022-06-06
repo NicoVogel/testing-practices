@@ -32,7 +32,13 @@
     "emmet.excludeLanguages": ["jade"],
     "[jade]": {
       "editor.defaultFormatter": "ducfilan.pug-formatter"
-    }
+    },
+    "plantuml.diagramsRoot": "presentation/diagrams",
+    "plantuml.previewAutoUpdate": true,
+    "workbench.editorAssociations": {
+      "*.drawio.png": "hediet.vscode-drawio"
+    },
+    "hediet.vscode-drawio.theme": "atlas"
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -46,7 +52,9 @@
     "EditorConfig.EditorConfig",
     "ducfilan.pug-formatter",
     "christian-kohler.path-intellisense",
-    "cschleiden.vscode-github-actions"
+    "cschleiden.vscode-github-actions",
+    "jebbs.plantuml",
+    "hediet.vscode-drawio"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
