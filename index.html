@@ -635,7 +635,7 @@ describe("L6", () => {
       expect(result).to.equal(data.expectedResult);
     });
   });
-});</code></pre></section></section><section><section><h2>Problem with Mocks</h2><img src="img/solitary-test-have-gaps.jpg"><aside class="notes">We often test components in isolation by mocking other components out,
+});</code></pre></section></section><section><section><h2>Problem with Mocks</h2><img src="img/solitary-test-have-gaps.png"><aside class="notes">We often test components in isolation by mocking other components out,
 but there is a potential for gaps in the implementation
 To address this issue, there are two patterns that help to mitigate the issue
 </aside></section><section><h2>Problem with Mocks</h2><img src="img/integration-tests-are-duplicative-and-slow.jpg"><aside class="notes">To fix that we create integration tests that are slow and difficult to maintain as well as duplicate effort.
@@ -661,7 +661,7 @@ At least the left part is usually considered when creating tests
 </aside></section><section><h2>Contract tests</h2><img class="r-stretch" src="img/contract-tests.jpg" style="background: white"><aside class="notes">The tests for the service need to verify the contract.
 Otherwise the gap between the implementation is not filled and there is possible misalignment
 </aside></section><section><h2>Contract tests</h2><p>Its a reminder to create a test for the service with the same input you expected.</p><aside class="notes">This is easily forgotten that the counter part is also needed.
-Also this does result in duplication, but that is not avoidable when using mocks</aside></section></section><section><section><h2>Social tests</h2><img src="img/overlapping-socialble-tests.jpg"><p>Part of checking if A works as it should be is to test that A calls B correctly -> <strong>no mock</strong></p><p>This mitigates the need for integration tests</p><aside class="notes">Source: https://www.youtube.com/watch?v=jwbKSiqG0DI
+Also this does result in duplication, but that is not avoidable when using mocks</aside></section></section><section><section><h2>Social tests</h2><img src="img/overlapping-socialble-tests.png"><p>Part of checking if A works as it should be is to test that A calls B correctly -> <strong>no mock</strong></p><p>This mitigates the need for integration tests</p><aside class="notes">Source: https://www.youtube.com/watch?v=jwbKSiqG0DI
 </aside></section><section><h3>Problem with actually calling everything</h3><p>Eventually you will hit infrastructure you don't want to run in unit tests</p><p>solution -> <strong>Nullable Infrastructure</strong></p></section><section><h3>Nullable Infrastructure</h3><ul><li>Real production code that can be disabled</li><li>Identical semantics -> same code</li><li>Tracks state when needed</li><li>Implemented with embedded stubs</li></ul><aside class="notes">You inject your infrastructure into the constructor and provide two ways factory functions to create the object.
 </aside></section><section data-auto-animate><h3>Nullable Infrastructure</h3><p>This means writing test code which is within your production code</p></section><section data-auto-animate><h3>Nullable Infrastructure</h3><p>This means writing test code which is within your production code</p><img src="img/controversial-meme.jpg"><aside class="notes">- we have test code in prod code
 + we no longer need Mocks
