@@ -16,6 +16,7 @@ section
   section
     p What do you actually test?
     h3 Behavior
+    p (Acceptance criteria)
     aside(class='notes').
       This is a clear must do and it should not be open to debate.
 
@@ -46,9 +47,9 @@ section
       At some point you decide this is no longer understandable and you split
       the class into multiple classes with one class (Main) that handles the others.
     p
-      b Test do not change for refactor
+      b Behavior Tests do not break when refactoring
     blockquote.
-      As the other classes are just implementation details
+      As the other classes are just implementation detail
       they should not be mocked.
     aside(class='notes').
       You should not even write tests for such implementations.

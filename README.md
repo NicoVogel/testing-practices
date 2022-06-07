@@ -1,5 +1,7 @@
 > You can find the presentation here: https://nicovogel.github.io/testing-practices/
 
+The slides are currently the most up to date and the code and readme will follow soon.
+
 # Testing Practices
 
 A big part of development in companies it to write tests.

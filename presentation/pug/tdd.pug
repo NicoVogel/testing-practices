@@ -1,7 +1,72 @@
 section
   section(id="tdd")
-    h1 TDD
-    p Test Driven Development
+    h1 Test Driven Development
 
   section
-    h1 What is TDD?
+    h2 What is TDD?
+    p Write tests first and then implement it
+    p Red - Green - Refactor
+    aside(class="notes").
+      If you ever heard about TDD, then you most probably have heard these statements.
+      The general idea of TDD is great, as that you always have confidence and
+      that you test your tests.
+
+      But how do you get started with TDD?
+
+  section
+    h2 Process of TDD
+    ol
+      li Come up with a scenario that you want to test
+      li Write a suitable test for it (Red)
+      li Implement it (Green)
+      li make your code look nice (Refactor)
+    aside(class="notes").
+      While this sounds rather simple at first, I noticed that it was rather difficult
+      to get started.
+
+  section(data-auto-animate)
+    p How to get started with TDD?
+    h2 (easy) Bugs
+
+  section(data-auto-animate)
+    p How to get started with TDD?
+    h2 (easy) Bugs
+    p The context is clear:
+    ul
+      li the inputs are known (Given)
+      li the action is clear (When)
+      li the expected output is known (Then)
+
+  section(data-auto-animate)
+    h2(data-id="title") What should be tested with TDD?
+
+  section(data-auto-animate)
+    h2(data-id="title") What should be tested with TDD?
+    h1(data-id="solution") Behavior
+
+  section(data-auto-animate)
+    img(src="img/unexpected-meme.webp")
+
+  section
+    h2 Big benefits of TDD
+    ul
+      li You test your tests
+      li You end up with a cleaner implementation
+
+  section
+    h3 Cleaner implementation?
+    p.
+      Because you start with the test, you automatically make the interface
+      cleaner and simpler to test.
+
+  section
+    h2 You want to know more?
+    p There are a lot of good talks out there that go in depth, so here some recommendations
+    ul
+      li
+        a(href="https://www.youtube.com/watch?v=vOO3hulIcsY" target="_blank") TDD Revisited - Ian Cooper - NDC London 2021
+      li
+        a(href="https://www.youtube.com/watch?v=KyFVA4Spcgg" target="_blank") 🚀 Does TDD Really Lead to Good Design? (Sandro Mancuso)
+      li
+        a(href="https://www.youtube.com/watch?v=MU7K_V6rFjM" target="_blank") Test Driven Development in Vue with Cypress by Josh Justice
+

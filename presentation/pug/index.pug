@@ -7,3 +7,17 @@ block content
   include ./e2e-testing.pug
   include ./tdd.pug
 
+  section
+    h1 Key takeaways
+    ul
+      li Test behavior nothing else
+      li Don't test everything
+      li Keep in mind that there are always gaps when using mocks
+    aside(class="notes").
+      By testing behavior you can be sure that your tests don't break when
+      refactoring code
+
+      Never ever test internal stuff, this only links your tests to the implementation
+      and they will break immediately once you start refactoring.
+
+      If you want to be sure, then you need another test for every test that uses mocks
