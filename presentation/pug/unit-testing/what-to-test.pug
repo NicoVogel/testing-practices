@@ -23,23 +23,84 @@ section
   section
     img(class='r-stretch' src='img/confused-meme.jpg' style='background: white')
 
-  section
-    h3 How to test behavior?
-    ul
-      li ensure that the system is in the correct state
-      li execute some action
-      li expect that the system changed according to the behavior
-    p.
-      Most of the time it's calling a function or an object's method.
+  - var howToTest_header = 'How to test behavior?';
+  - var howToTest_1 = 'ensure that the system is in the correct state (Given)';
+  - var howToTest_2 = 'execute some action (When)';
+  - var howToTest_3 = 'expect that the system changed according to the behavior (Then)';
+
+  section(data-auto-animate)
+    h3=howToTest_header
+
+  section(data-auto-animate)
+    h3=howToTest_header
+    ol
+      li=howToTest_1
+
+  section(data-auto-animate)
+    h3=howToTest_header
+    ol
+      li=howToTest_1
+      li=howToTest_2
+
+  section(data-auto-animate)
+    h3=howToTest_header
+    ol
+      li=howToTest_1
+      li=howToTest_2
+      li=howToTest_3
+
+  section(data-auto-animate)
+    h3=howToTest_header
+    ol
+      li=howToTest_1
+      li=howToTest_2
+      li=howToTest_3
+    blockquote
+      | Calling a
+      b  public
+      |  function or object method
 
   section
-    h3 Common mistakes to avoid
-    ul
-      li testing every function of a class
-      li testing every attribute of a class
-      li making assertions that some internal stuff happens in a class
-    aside(class='notes').
-      Lets look at an example.
+    h3 Example -> Router
+    pre
+      code(class="language-typescript" data-line-numbers="2,5-11|14-22").
+        // src/router.ts
+        export class Router {
+          private currentRoute: Route;
+
+          constructor(private routes: Route[]) {
+            if (routes.length === 0) {
+              throw new Error(
+                'Business Error, Router cannot function without routes.'
+              );
+            }
+            this.currentRoute = this.getDefaultRoute();
+          }
+
+          public handleUrlChange(url: URL) {
+            const route = this.findRoute(this.routes, url)
+              ?? this.getDefaultRoute();
+            if (route === this.currentRoute) {
+              return;
+            }
+            this.currentRoute = route;
+            this.updateShownPage(route);
+          }
+
+          private getDefaultRoute(): Route {
+            return this.routes[0];
+          }
+
+          private findRoute(routes: Route[], url: URL): Route | undefined {
+            const possibleMatches = this.findMatches(routes, url);
+            if (possibleMatches.length === 0) {
+              return undefined;
+            }
+            return this.findBestMatch(possibleMatches);
+          }
+        }
+
+
 
   section
     p.
@@ -66,6 +127,13 @@ section
     aside(class='notes').
       Whenever implementation details a^^re tested, then you need to
       expect that you need to remove the tests when the code is refactored.
+
+  section
+    h3 Common mistakes to avoid
+    ul
+      li testing every function of a class
+      li testing every attribute of a class
+      li making assertions that some internal stuff happens in a class
 
   section
     h3 What are the benefits of this?
