@@ -14,21 +14,152 @@ outline some of them.
 What do you think, which of these do we test?
 As always, the answer is: (next slide)
 </aside></section><section><p>What do you actually test?</p><h3>Behavior</h3><p>(Acceptance criteria)</p><aside class="notes">This is a clear must do and it should not be open to debate.
-</aside></section><section><img class="r-stretch" src="img/confused-meme.jpg" style="background: white"></section><section><h3>How to test behavior?</h3><ul><li>ensure that the system is in the correct state</li><li>execute some action</li><li>expect that the system changed according to the behavior</li></ul><p>Most of the time it's calling a function or an object's method.
-</p></section><section><h3>Common mistakes to avoid</h3><ul><li>testing every function of a class</li><li>testing every attribute of a class</li><li>making assertions that some internal stuff happens in a class</li></ul><aside class="notes">Lets look at an example.
-</aside></section><section><p>Imagine you work on a feature and your class gets bigger and bigger.
-At some point you decide this is no longer understandable and you split
-the class into multiple classes with one class (Main) that handles the others.</p><p><b>Behavior Tests do not break when refactoring</b></p><blockquote>As the other classes are just implementation detail
-they should not be mocked.</blockquote><aside class="notes">You should not even write tests for such implementations.
-In case that you want or need to test them, you need to mark them
-in some way that they are deleted if needed, as they only reflect a
-partial behavior.
-</aside></section><section><h3>Don't test implementation details</h3><p>The sub classes don't need tests.
-If you want to test them anyways, then mark the tests as
-"throw away" or something similar.</p><aside class="notes">Whenever implementation details a^^re tested, then you need to
-expect that you need to remove the tests when the code is refactored.
-</aside></section><section><h3>What are the benefits of this?</h3><p>Tests only break if you change the behavior of the system
-and not if you refactor code</p></section></section><section><section id="how-to-structure-tests"><h2>How should you structure your tests?</h2><ul><li>A test</li><li>A test file</li></ul></section><section><h3>Test structure</h3><pre><code class="language-typescript">it('should do something', () => {
+</aside></section><section><img class="r-stretch" src="img/confused-meme.jpg" style="background: white"></section><section data-auto-animate><h3>How to test behavior?</h3></section><section data-auto-animate><h3>How to test behavior?</h3><ol><li>ensure that the system is in the correct state (Given)</li></ol></section><section data-auto-animate><h3>How to test behavior?</h3><ol><li>ensure that the system is in the correct state (Given)</li><li>execute some action (When)</li></ol></section><section data-auto-animate><h3>How to test behavior?</h3><ol><li>ensure that the system is in the correct state (Given)</li><li>execute some action (When)</li><li>expect that the system changed according to the behavior (Then)</li></ol></section><section data-auto-animate><h3>How to test behavior?</h3><ol><li>ensure that the system is in the correct state (Given)</li><li>execute some action (When)</li><li>expect that the system changed according to the behavior (Then)</li></ol><blockquote>Calling a<b> public</b> function or object method</blockquote></section><section><h3>Example -> Router</h3><pre><code class="language-typescript" data-line-numbers="2,8-13|15-22|16-17,22|29-35|40-42|44-51|53-61">// src/router.ts
+export class Router {
+  private _currentRoute: Route;
+  public get currentRoute() {
+    return this._currentRoute;
+  }
+
+  constructor(private routes: Route[]) {
+    if (routes.length === 0) {
+      throw new Error("Business Error, Router cannot function without routes.");
+    }
+    this._currentRoute = this.getDefaultRoute();
+  }
+
+  public handleUrlChange(url: string) {
+    const route = this.findRoute(this.routes, url)
+      ?? this.getDefaultRoute();
+    if (route === this._currentRoute) {
+      return;
+    }
+    this._currentRoute = route;
+    this.updateShownPage(route);
+  }
+
+  private getDefaultRoute(): Route {
+    return this.routes[0];
+  }
+
+  private findRoute(routes: Route[], url: string): Route | undefined {
+    const possibleMatches = this.findMatches(routes, url);
+    if (possibleMatches.length === 0) {
+      return undefined;
+    }
+    return this.findBestMatch(possibleMatches);
+  }
+}
+
+// src/router.spec.ts
+describe("Router", () => {
+  it("should fail fast, when no routes are provided", () => {
+    expect(() => new Router([])).to.throw();
+  });
+
+  it("should change route", () => {
+    const routes = [{ path: "/user" }, { path: "/profile" }];
+    const router = new Router(routes);
+
+    router.handleUrlChange("/profile");
+
+    expect(router.currentRoute).to.equal({ path: "/profile" });
+  });
+
+  it("should not change current route, if it is the same route", () => {
+    const routes = [{ path: "/user" }, { path: "/profile" }];
+    const router = new Router(routes);
+    const currentRoute = router.currentRoute;
+
+    router.handleUrlChange("/user");
+
+    expect(router.currentRoute).to.equal(currentRoute);
+  });
+});</code></pre><aside class="notes"><ul><li>Imagine a router</li><li>we need to handle url changes -> findRoute + updateShownPage</li><li>concentrate on findRoute for a moment</li><li>could be refactored out -> separation of concerns</li><li>before, quick look at tests</li></ul></aside></section><style>.what-to-test-example-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+</style><section><h3>Example -> Split Router</h3><div class="what-to-test-example-container"><h4>Old</h4><h4>New</h4><ul><li>router.ts</li><li>router.spec.ts</li></ul><ul><li>find-route.ts</li><li>find-route.spec.ts</li><li>router.ts</li><li>router.spec.ts</li></ul></div><aside class="notes">While it was all in one file before, now the find-route is extracted as a first step
+</aside></section><section><h3>Example -> Split Router</h3><pre><code class="language-typescript" data-line-numbers="2|16|29|55-61|64-68|70-74">// src/router.ts
+export class Router {
+  private _currentRoute: Route;
+  public get currentRoute() {
+    return this._currentRoute;
+  }
+
+  constructor(private routes: Route[]) {
+    if (routes.length === 0) {
+      throw new Error("Business Error, Router cannot function without routes.");
+    }
+    this._currentRoute = this.getDefaultRoute();
+  }
+
+  public handleUrlChange(url: string) {
+    const route = findRoute(this.routes, url) ?? this.getDefaultRoute();
+    if (route === this._currentRoute) {
+      return;
+    }
+    this._currentRoute = route;
+    this.updateShownPage(route);
+  }
+
+  private getDefaultRoute(): Route {
+    return this.routes[0];
+  }
+}
+// src/router.spec.ts
+describe("Router", () => {
+  it("should fail fast, when no routes are provided", () => {
+    expect(() => new Router([])).to.throw();
+  });
+
+  it("should change route", () => {
+    const routes = [{ path: "/user" }, { path: "/profile" }];
+    const router = new Router(routes);
+
+    router.handleUrlChange("/profile");
+
+    expect(router.currentRoute).to.equal({ path: "/profile" });
+  });
+
+  it("should not change current route, if it is the same route", () => {
+    const routes = [{ path: "/user" }, { path: "/profile" }];
+    const router = new Router(routes);
+    const currentRoute = router.currentRoute;
+
+    router.handleUrlChange("/user");
+
+    expect(router.currentRoute).to.equal(currentRoute);
+  });
+});
+
+// find-route.ts
+export function findRoute(routes: Route[], url: string): Route | undefined {
+  const possibleMatches = findMatches(routes, url);
+  if (possibleMatches.length === 0) {
+    return undefined;
+  }
+  return findBestMatch(possibleMatches);
+}
+// find-route.spec.ts
+describe("Find Route", () => {
+  it("should find no route if no routes are provided", () => {
+    const routes: Route[] = [];
+    const result = findRoute(routes, "");
+    expect(result).to.be.undefined;
+  });
+
+  it("should find no route if the url does not match any route", () => {
+    const routes: Route[] = [{ path: "/user" }];
+    const result = findRoute(routes, "");
+    expect(result).to.be.undefined;
+  });
+  // ...
+});</code></pre><aside class="notes"><ul><li>router implementation did not really change</li><li>only moved find-route code out</li><li>router tests did not change</li></ul></aside></section><section><h3>Example takeaways</h3><ul><li>The tests for router are not affected by the extraction</li><li>The find-route function was not mocked</li><li>Only the interface was tested (only public)</li><li>We were able to test system behavior on a smaller level</li></ul><aside class="notes"><ul><li>You should not split the code infinitely, just so that you can test everything</li><li>Instead keep it to a small understandable context at minimum</li></ul></aside></section><section><h3>Why keep tests in router for find-route?</h3><p>You don't know how the code later will be refactored.
+This ensures that the behavior is preserved even if the
+underlying code is changed.
+</p></section><section><h3>Behavior Tests do not break when refactoring</h3><aside class="notes">As long as you don't change the public interface.
+</aside></section><section><h2>A few tips to keep in mind</h2></section><section><h3>Common mistakes to avoid</h3><ul><li>testing every function of a class</li><li>testing every attribute of a class</li><li>making assertions that some internal stuff happens in a class -> test the interface</li></ul></section><section><h3>Don't split to much</h3><p>You should not split your code needlessly, just so that you can test everything.</p><p>Instead, aim for small understandable contexts, like "find-route"</p></section></section><section><section id="how-to-structure-tests"><h2>How should you structure your tests?</h2><ul><li>A test</li><li>A test file</li></ul></section><section><h3>Test structure</h3><pre><code class="language-typescript">it('should do something', () => {
   // Given (Arrange)
 
   // When (Act)
@@ -709,7 +840,7 @@ But how do you get started with TDD?
 to get started.
 </aside></section><section data-auto-animate><p>How to get started with TDD?</p><h2>(easy) Bugs</h2></section><section data-auto-animate><p>How to get started with TDD?</p><h2>(easy) Bugs</h2><p>The context is clear:</p><ul><li>the inputs are known (Given)</li><li>the action is clear (When)</li><li>the expected output is known (Then)</li></ul></section><section data-auto-animate><h2 data-id="title">What should be tested with TDD?</h2></section><section data-auto-animate><h2 data-id="title">What should be tested with TDD?</h2><h1 data-id="solution">Behavior</h1></section><section data-auto-animate><img src="img/unexpected-meme.jpg"></section><section><h2>Big benefits of TDD</h2><ul><li>You test your tests</li><li>You end up with a cleaner implementation</li></ul></section><section><h3>Cleaner implementation?</h3><p>Because you start with the test, you automatically make the interface
 cleaner and simpler to test.
-</p></section><section><h2>You want to know more?</h2><p>There are a lot of good talks out there that go in depth, so here some recommendations</p><ul><li><a href="https://www.youtube.com/watch?v=vOO3hulIcsY" target="_blank">TDD Revisited - Ian Cooper - NDC London 2021</a></li><li><a href="https://www.youtube.com/watch?v=KyFVA4Spcgg" target="_blank">🚀 Does TDD Really Lead to Good Design? (Sandro Mancuso)</a></li><li><a href="https://www.youtube.com/watch?v=MU7K_V6rFjM" target="_blank">Test Driven Development in Vue with Cypress by Josh Justice</a></li></ul></section></section><section><h1>Key takeaways</h1><ul><li>Test behavior nothing else</li><li>Don't test everything</li><li>Keep in mind that there are always gaps when using mocks</li></ul><aside class="notes">By testing behavior you can be sure that your tests don't break when
+</p></section><section><h2>You want to know more?</h2><p>There are a lot of good talks out there that go in depth, so here some recommendations</p><ul><li><a href="https://www.youtube.com/watch?v=vOO3hulIcsY" target="_blank">TDD Revisited - Ian Cooper - NDC London 2021</a></li><li><a href="https://www.youtube.com/watch?v=KyFVA4Spcgg" target="_blank">🚀 Does TDD Really Lead to Good Design? (Sandro Mancuso)</a></li><li><a href="https://www.youtube.com/watch?v=MU7K_V6rFjM" target="_blank">Test Driven Development in Vue with Cypress by Josh Justice</a></li></ul><p>Refactoring example:<a href="https://www.youtube.com/watch?v=jwJnd9ycs6Q" target="_blank">🚀 Live Refactoring Towards Solid Code</a></p></section></section><section><h1>Key takeaways</h1><ul><li>Test behavior nothing else</li><li>Don't test everything</li><li>Keep in mind that there are always gaps when using mocks</li><li>Try out TDD, its not that hard with Bugs</li></ul><aside class="notes">By testing behavior you can be sure that your tests don't break when
 refactoring code
 
 Never ever test internal stuff, this only links your tests to the implementation
