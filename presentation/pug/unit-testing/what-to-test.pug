@@ -63,27 +63,28 @@ section
   section
     h3 Example -> Router
     pre
-      code(class="language-typescript" data-line-numbers="2,5-11|14-22").
+      code(class="language-typescript" data-line-numbers="2,8-13|15-22|16-17,22|29-35|40-42|44-51|53-61").
         // src/router.ts
         export class Router {
-          private currentRoute: Route;
+          private _currentRoute: Route;
+          public get currentRoute() {
+            return this._currentRoute;
+          }
 
           constructor(private routes: Route[]) {
             if (routes.length === 0) {
-              throw new Error(
-                'Business Error, Router cannot function without routes.'
-              );
+              throw new Error("Business Error, Router cannot function without routes.");
             }
-            this.currentRoute = this.getDefaultRoute();
+            this._currentRoute = this.getDefaultRoute();
           }
 
-          public handleUrlChange(url: URL) {
+          public handleUrlChange(url: string) {
             const route = this.findRoute(this.routes, url)
               ?? this.getDefaultRoute();
-            if (route === this.currentRoute) {
+            if (route === this._currentRoute) {
               return;
             }
-            this.currentRoute = route;
+            this._currentRoute = route;
             this.updateShownPage(route);
           }
 
@@ -91,7 +92,7 @@ section
             return this.routes[0];
           }
 
-          private findRoute(routes: Route[], url: URL): Route | undefined {
+          private findRoute(routes: Route[], url: string): Route | undefined {
             const possibleMatches = this.findMatches(routes, url);
             if (possibleMatches.length === 0) {
               return undefined;
@@ -100,43 +101,184 @@ section
           }
         }
 
+        // src/router.spec.ts
+        describe("Router", () => {
+          it("should fail fast, when no routes are provided", () => {
+            expect(() => new Router([])).to.throw();
+          });
+
+          it("should change route", () => {
+            const routes = [{ path: "/user" }, { path: "/profile" }];
+            const router = new Router(routes);
+
+            router.handleUrlChange("/profile");
+
+            expect(router.currentRoute).to.equal({ path: "/profile" });
+          });
+
+          it("should not change current route, if it is the same route", () => {
+            const routes = [{ path: "/user" }, { path: "/profile" }];
+            const router = new Router(routes);
+            const currentRoute = router.currentRoute;
+
+            router.handleUrlChange("/user");
+
+            expect(router.currentRoute).to.equal(currentRoute);
+          });
+        });
+    aside(class="notes")
+      ul
+        li Imagine a router
+        li we need to handle url changes -> findRoute + updateShownPage
+        li concentrate on findRoute for a moment
+        li could be refactored out -> separation of concerns
+        li before, quick look at tests
+
+  style.
+    .what-to-test-example-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+  section
+    h3 Example -> Split Router
+    .what-to-test-example-container
+      h4 Old
+      h4 New
+      ul
+        li router.ts
+        li router.spec.ts
+      ul
+        li find-route.ts
+        li find-route.spec.ts
+        li router.ts
+        li router.spec.ts
+    aside(class="notes").
+      While it was all in one file before, now the find-route is extracted as a first step
+
+  section
+    h3 Example -> Split Router
+    pre
+      code(class="language-typescript" data-line-numbers="2|16|29|55-61|64-68|70-74").
+        // src/router.ts
+        export class Router {
+          private _currentRoute: Route;
+          public get currentRoute() {
+            return this._currentRoute;
+          }
+
+          constructor(private routes: Route[]) {
+            if (routes.length === 0) {
+              throw new Error("Business Error, Router cannot function without routes.");
+            }
+            this._currentRoute = this.getDefaultRoute();
+          }
+
+          public handleUrlChange(url: string) {
+            const route = findRoute(this.routes, url) ?? this.getDefaultRoute();
+            if (route === this._currentRoute) {
+              return;
+            }
+            this._currentRoute = route;
+            this.updateShownPage(route);
+          }
+
+          private getDefaultRoute(): Route {
+            return this.routes[0];
+          }
+        }
+        // src/router.spec.ts
+        describe("Router", () => {
+          it("should fail fast, when no routes are provided", () => {
+            expect(() => new Router([])).to.throw();
+          });
+
+          it("should change route", () => {
+            const routes = [{ path: "/user" }, { path: "/profile" }];
+            const router = new Router(routes);
+
+            router.handleUrlChange("/profile");
+
+            expect(router.currentRoute).to.equal({ path: "/profile" });
+          });
+
+          it("should not change current route, if it is the same route", () => {
+            const routes = [{ path: "/user" }, { path: "/profile" }];
+            const router = new Router(routes);
+            const currentRoute = router.currentRoute;
+
+            router.handleUrlChange("/user");
+
+            expect(router.currentRoute).to.equal(currentRoute);
+          });
+        });
+
+        // find-route.ts
+        export function findRoute(routes: Route[], url: string): Route | undefined {
+          const possibleMatches = findMatches(routes, url);
+          if (possibleMatches.length === 0) {
+            return undefined;
+          }
+          return findBestMatch(possibleMatches);
+        }
+        // find-route.spec.ts
+        describe("Find Route", () => {
+          it("should find no route if no routes are provided", () => {
+            const routes: Route[] = [];
+            const result = findRoute(routes, "");
+            expect(result).to.be.undefined;
+          });
+
+          it("should find no route if the url does not match any route", () => {
+            const routes: Route[] = [{ path: "/user" }];
+            const result = findRoute(routes, "");
+            expect(result).to.be.undefined;
+          });
+          // ...
+        });
+    aside(class="notes")
+      ul
+        li router implementation did not really change
+        li only moved find-route code out
+        li router tests did not change
 
 
   section
-    p.
-      Imagine you work on a feature and your class gets bigger and bigger.
-      At some point you decide this is no longer understandable and you split
-      the class into multiple classes with one class (Main) that handles the others.
-    p
-      b Behavior Tests do not break when refactoring
-    blockquote.
-      As the other classes are just implementation detail
-      they should not be mocked.
-    aside(class='notes').
-      You should not even write tests for such implementations.
-      In case that you want or need to test them, you need to mark them
-      in some way that they are deleted if needed, as they only reflect a
-      partial behavior.
+    h3 Example takeaways
+    ul
+      li The tests for router are not affected by the extraction
+      li The find-route function was not mocked
+      li Only the interface was tested (only public)
+      li We were able to test system behavior on a smaller level
+    aside(class="notes")
+      ul
+        li You should not split the code infinitely, just so that you can test everything
+        li Instead keep it to a small understandable context at minimum
+
 
   section
-    h3 Don't test implementation details
+    h3 Why keep tests in router for find-route?
     p.
-      The sub classes don't need tests.
-      If you want to test them anyways, then mark the tests as
-      "throw away" or something similar.
-    aside(class='notes').
-      Whenever implementation details a^^re tested, then you need to
-      expect that you need to remove the tests when the code is refactored.
+      You don't know how the code later will be refactored.
+      This ensures that the behavior is preserved even if the
+      underlying code is changed.
+
+  section
+    h3 Behavior Tests do not break when refactoring
+    aside(class="notes").
+      As long as you don't change the public interface.
+
+  section
+    h2 A few tips to keep in mind
 
   section
     h3 Common mistakes to avoid
     ul
       li testing every function of a class
       li testing every attribute of a class
-      li making assertions that some internal stuff happens in a class
+      li making assertions that some internal stuff happens in a class -> test the interface
 
   section
-    h3 What are the benefits of this?
-    p.
-      Tests only break if you change the behavior of the system
-      and not if you refactor code
+    h3 Don't split to much
+    p You should not split your code needlessly, just so that you can test everything.
+    p Instead, aim for small understandable contexts, like "find-route"
